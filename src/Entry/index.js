@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core';
+import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
 
 function Entry(props) {
   const {title, amount, icon} = props
-
+  const theme = useTheme();
   return (
-  <Link to={`/friend/`}>
-    <ListItem style={{backgroundColor: "#abc4e0", border: "1px solid white", textDecoration: 'none'}}>
+  <Link to={`/friend/`} style={{textDecoration: 'none', color: 'black'}}>
+    <ListItem style={{borderTop: "1px solid grey"}}>
       <ListItemAvatar>
-        <Avatar>
+        <Avatar style={{backgroundColor: theme.palette.primary.main}}>
           {icon}
         </Avatar>
       </ListItemAvatar>
       <ListItemText
+        style={{textDecoration: 'none'}}
         primary={title}
         secondary={amount}
       />

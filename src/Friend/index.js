@@ -1,6 +1,6 @@
 import React from 'react';
-import {Folder, Add} from '@material-ui/icons';
-import { Typography, Paper, Container, Fab, makeStyles } from '@material-ui/core';
+import { Add, LocalGroceryStoreOutlined } from '@material-ui/icons';
+import { Typography, Container, Fab, makeStyles, CssBaseline, useTheme } from '@material-ui/core';
 import { expenseDataArray } from '../dummyData';
 import Entry from '../Entry';
 
@@ -18,29 +18,31 @@ const useStyles = makeStyles(theme => ({
 
 function generate() {
   console.log(expenseDataArray)
-  return expenseDataArray.map(e => <Entry title={e.title} amount={e.amount} icon={<Folder />}/>)
+  return expenseDataArray.map(e => <Entry title={e.title} amount={e.amount} icon={<LocalGroceryStoreOutlined />}/>)
 }
 
 function Friend(props) {
   const {id} = props.match.params;
   const classes = useStyles();
-  return (
-    <Container maxWidth="xs">
-      <Paper>
-          <div style={{color: 'white', backgroundColor: '#2579b1', padding: '1rem'}} className={classes.fabContainer}>
-            <Typography variant="h4">
-              {id}
-            </Typography>
-            <Typography variant="subtitle1">
-              You owe: $249,<br/>
-              You are owed: $100
-            </Typography>
-            <Fab className={classes.fab} color="primary" size="large" aria-label="add" onClick={() => props.history.push(`/friend/${id}/add-expense`)}>
-              <Add />
-            </Fab>
-          </div>
-          {generate()}
-      </Paper>
+  const theme = useTheme();
+  return ( 
+    <Container style={{padding: 0}} maxWidth="xs">
+      <CssBaseline />
+      <div style={{color: 'white', backgroundColor: theme.palette.primary.main, padding: '1rem'}} className={classes.fabContainer}>
+        <Typography variant="h4">
+          {id}
+        </Typography>
+        <Typography variant="caption">
+          {id}@gmail.com
+        </Typography>
+        <Typography variant="subtitle1">
+          You are owed: $100
+        </Typography>
+        <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => props.history.push(`/friend/${id}/add-expense`)}>
+          <Add />
+        </Fab>
+      </div>
+      {generate()}
     </Container>
   )
 }

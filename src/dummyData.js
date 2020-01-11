@@ -13,3 +13,40 @@ const expenseData = {
 };
 
 export const expenseDataArray = Array(12).fill({...expenseData});
+
+export const splitBetweenData = [
+  { 
+    id: '5bed12267',
+    person: "Amay",
+    enabled: false,
+    percentage: 0,
+    amount: 0,
+    share: 0 
+  },
+
+  { 
+    id: '5bed12256',
+    person: "Harit",
+    enabled: true,
+    percentage: 0,
+    amount: 0,
+    share: 0 
+  },
+
+  { 
+    id: '5bed12289',
+    person: "Shubham",
+    enabled: true,
+    percentage: 0,
+    amount: 0,
+    share: 0 
+  },
+
+  { 
+    id: '5bed12201',
+    person: "Prit",
+    enabled: true,
+    percentage: 0,
+    amount: 0,
+    share: 0 
+  }];

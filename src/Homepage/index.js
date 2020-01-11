@@ -6,8 +6,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Paper } from '@material-ui/core';
+import { useTheme, CssBaseline } from '@material-ui/core';
 import Friends from '../Friends';
+import SwipeableViews from 'react-swipeable-views';
+import DrawerLeft from '../DrawerLeft';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -20,8 +22,9 @@ function TabPanel(props) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
       {...other}
+      style={{padding: 0}}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box>{children}</Box>}
     </Typography>
   );
 }
@@ -42,40 +45,55 @@ function a11yProps(index) {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    width: '50%',
-    margin: '2rem auto'
+    marginTop: theme.spacing(2.5)
   },
+  tabPanelRoot: {
+    marginTop: theme.spacing(0)
+  },
+  Container: {
+    padding: '0px'
+  }
 }));
 
 export default function Homepage() {
   const classes = useStyles();
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleChangeIndex = index => {
+    setValue(index);
+  };
 
   return (
-    <div className={classes.root}>
-      <Paper square elevation={2}>
-        <AppBar position="static">
-          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+    <DrawerLeft>
+      <CssBaseline />
+      <div className={classes.root}>
+        <AppBar style={{backgroundColor: theme.palette.primary2.main}} position="static">
+          <Tabs value={value} onChange={handleChange} variant="fullWidth">
             <Tab label="Friends" {...a11yProps(0)} />
             <Tab label="Groups" {...a11yProps(1)} />
             <Tab label="Activity" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
-          <Friends/>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Groups
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Activity
-        </TabPanel>
-      </Paper>
-    </div>
+        <SwipeableViews
+          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+          index={value}
+          onChangeIndex={handleChangeIndex}
+        >
+          <TabPanel className={classes.tabPanelRoot} value={value} index={0}>
+            <Friends/>
+          </TabPanel>
+          <TabPanel className={classes.tabPanelRoot} value={value} index={1}>
+            <Friends/>
+          </TabPanel>
+          <TabPanel className={classes.tabPanelRoot} value={value} index={2}>
+            <Friends/>
+          </TabPanel>
+        </SwipeableViews>
+      </div>
+    </DrawerLeft>
   );
 }
