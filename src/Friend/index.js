@@ -2,7 +2,7 @@ import React from 'react';
 import { Add, LocalGroceryStoreOutlined } from '@material-ui/icons';
 import { Typography, Container, Fab, makeStyles, CssBaseline, useTheme } from '@material-ui/core';
 import { expenseDataArray } from '../dummyData';
-import Entry from '../Entry';
+import ExpenseEntry from './ExpenseEntry';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 
 function generate() {
   console.log(expenseDataArray)
-  return expenseDataArray.map(e => <Entry title={e.title} amount={e.amount} icon={<LocalGroceryStoreOutlined />}/>)
+  return expenseDataArray.map(e => <ExpenseEntry key={e.id} id={e.id} title={e.title} amount={e.amount} icon={<LocalGroceryStoreOutlined />}/>)
 }
 
 function Friend(props) {

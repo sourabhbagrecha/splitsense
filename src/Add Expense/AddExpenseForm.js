@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, Checkbox, FormControlLabel, Dialog, DialogContent, Divider, DialogTitle } from '@material-ui/core';
 import { PieChart } from '@material-ui/icons';
-import {splitNames} from '../constants.js'
-import useInputState from '../Hooks/useInputState';
+import {splitNames} from '../constants.js';
 import SplitDialog from './SplitDialog.js';
-import { SplitBetweenContext } from '../Contexts/splitBetweenProvider.js';
+import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,12 +31,22 @@ const useStyles = makeStyles(theme => ({
 
 function AddExpenseForm(props) {  
   const classes = useStyles();
-  const [title, handleTitleChange] = useInputState("");
-  const [splitMethod, handleSplitMethodChange] = useInputState("equally");
-  const [paidBy, setPaidBy] = useState([{ id: '5bed12234', person: "Amay", amount: 0, enabled: false }, { id: '5bed12245', person: "Harit", amount: 0, enabled: false }, { id: '5bed12278', person: "Shubham", amount: 0, enabled: false }, { id: '5bed12290', person: "Prit", amount: 0, enabled: false }]);
-  const {splitBetween, toggleSplitEnabled, resetValues, totalAmount, handleAmountChange} = useContext(SplitBetweenContext);
-  const [paidByDialog, togglePaidByDialog] = useState(false);
-  const [splitDialogOpen, toggleSplitDialog] = useState(false);
+  const {
+    handleSplitMethodChange,
+    togglePaidByDialog,
+    toggleSplitEnabled, 
+    handleAmountChange, 
+    handleTitleChange,
+    toggleSplitDialog,
+    paidByDialog, 
+    resetValues, 
+    splitMethod,
+    totalAmount, 
+    setPaidBy,
+    editMode,
+    paidBy,
+    title,
+    } = useContext(AddExpenseContext);
   const handleDialogClose = () => {
     toggleSplitDialog(false);
     togglePaidByDialog(false);
@@ -72,33 +81,23 @@ function AddExpenseForm(props) {
           <PieChart />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Add Expense
+          {editMode ? "Edit Expense" : "Add Expense"}
         </Typography>
         <form className={classes.form}>
           <TextField
-            onChange={handleTitleChange}
-            label="Expense Title"
-            variant="outlined"
-            margin="normal"
-            value={title}
+            onChange={handleTitleChange} required
+            label="Expense Title" autoFocus
+            variant="outlined" fullWidth
+            margin="normal" id="title"
+            value={title} type="text"
             name="title"
-            type="text"
-            id="title"
-            fullWidth
-            autoFocus
-            required
           />
           <TextField
-            onChange={updateAmount}
-            variant="outlined"
-            margin="normal"
-            label="Amount"
-            value={totalAmount}
-            name="amount"
-            type="number"
-            id="amount"
-            fullWidth
-            required
+            value={totalAmount} name="amount"
+            onChange={updateAmount} required
+            variant="outlined" fullWidth
+            label="Amount" type="number"
+            margin="normal" id="amount"
           />
           <>
             <Button 
@@ -112,10 +111,6 @@ function AddExpenseForm(props) {
               handleSplitMethodChange={updateSplitMethod} 
               handleDialogClose={handleDialogClose} 
               handleShareChange={handleShareChange} 
-              splitDialogOpen={splitDialogOpen}  
-              splitMethod={splitMethod} 
-              splitNames={splitNames} 
-              splitBetween={splitBetween} 
               toggleSplitEnabled={toggleSplitEnabled} 
             />
             <Button 

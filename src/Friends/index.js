@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
 function generate(classes, theme) {
   return ['Amay', 'Prit', 'Harit', 'Shubham', 'Tushar', 'Simran', 'Saloni', 'Sundar Pichai'].map(value =>
     <Link to={`/friend/${value}`} className={classes.friend} style={{textDecoration: 'none', color: 'black'}}>
-      <ListItem style={{borderTop: "1px solid grey"}}>
+      <ListItem style={{borderTop: "1px solid #cfcdc8"}}>
         <ListItemAvatar>
           <Avatar style={{color: "white", backgroundColor: theme.palette.secondary.main}}>
             <PersonOutline />

@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import { Dialog, DialogTitle, DialogContent, FormControl, InputLabel, Select, MenuItem, Divider, Button } from '@material-ui/core';
 import SplitItemEntry from './SplitItemEntry';
-import { SplitBetweenContext } from '../Contexts/splitBetweenProvider';
-
+import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 
 function SplitDialog(props) {
-  const {handleSplitMethodChange, handleDialogClose, splitMethod, splitNames, handleShareChange, splitDialogOpen} = props
-  const {splitBetween, toggleSplitEnabled} = useContext(SplitBetweenContext);
+  const {handleSplitMethodChange, handleDialogClose, handleShareChange} = props
+  const {splitBetween, toggleSplitEnabled, splitDialogOpen, splitMethod, splitNames} = useContext(AddExpenseContext);
   
 
   return (

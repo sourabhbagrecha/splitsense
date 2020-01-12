@@ -12,6 +12,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
+import GoogleSignInButton from './GoogleSignInButton';
 
 const useStyles = makeStyles({
   list: {
@@ -24,8 +25,14 @@ const useStyles = makeStyles({
 
 export default function DrawerLeft(props) {
   const classes = useStyles();
+  const {
+    user,
+    signOut,
+    signInWithGoogle,
+  } = props.authProps;
+
   const [state, setState] = React.useState({
-    left: false,
+    left: true,
   });
 
   const toggleDrawer = (side, open) => event => {
@@ -44,12 +51,9 @@ export default function DrawerLeft(props) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+          <ListItem>
+            <GoogleSignInButton  {...props.authProps} />
           </ListItem>
-        ))}
       </List>
       <Divider />
       <List>

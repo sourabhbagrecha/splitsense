@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
 
-function Entry(props) {
-  const {title, amount, icon} = props
+function SplitEntry(props) {
+  const {id, person, amount, icon} = props
   const theme = useTheme();
   return (
-  <Link to={`/friend/`} style={{textDecoration: 'none', color: 'black'}}>
-    <ListItem style={{borderTop: "1px solid grey"}}>
+  <Link to={`/friend/${id}`} style={{textDecoration: 'none', color: 'black'}}>
+    <ListItem style={{borderBottom: "1px solid #cfcdc8"}}>
       <ListItemAvatar>
         <Avatar style={{backgroundColor: theme.palette.primary.main}}>
           {icon}
@@ -15,7 +15,7 @@ function Entry(props) {
       </ListItemAvatar>
       <ListItemText
         style={{textDecoration: 'none'}}
-        primary={title}
+        primary={person}
         secondary={amount}
       />
     </ListItem>
@@ -23,4 +23,4 @@ function Entry(props) {
     
   )
 }
-export default Entry;
+export default SplitEntry;

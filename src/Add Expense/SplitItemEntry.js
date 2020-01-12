@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { FormControlLabel, TextField, Checkbox, makeStyles } from '@material-ui/core';
-import { SplitBetweenContext } from '../Contexts/splitBetweenProvider';
+import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 
 const useStyles = makeStyles(theme => ({
   dialogTextField: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 function SplitItemEntry(props) {
   const {id, person, amount, enabled, percentage, share, splitMethod, handleShareChange} = props;
-  const {toggleSplitEnabled, splitEqually, splitUnequally, splitByPercentage, splitByShare, totalAmount, splitBetween, calculateShare, calculatePercentage} = useContext(SplitBetweenContext);
+  const {toggleSplitEnabled, splitEqually, splitUnequally, splitByPercentage, splitByShare, totalAmount, splitBetween, calculateShare, calculatePercentage} = useContext(AddExpenseContext);
   const classes = useStyles();
   const handleSplitUnequally = (e) => {
     const personId = e.target.getAttribute('personid');

@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Homepage() {
+export default function Homepage(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -68,10 +68,10 @@ export default function Homepage() {
   };
 
   return (
-    <DrawerLeft>
+    <DrawerLeft authProps={ props.authProps } >
       <CssBaseline />
       <div className={classes.root}>
-        <AppBar style={{backgroundColor: theme.palette.primary2.main}} position="static">
+        <AppBar position="static">
           <Tabs value={value} onChange={handleChange} variant="fullWidth">
             <Tab label="Friends" {...a11yProps(0)} />
             <Tab label="Groups" {...a11yProps(1)} />
