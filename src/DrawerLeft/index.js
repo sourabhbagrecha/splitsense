@@ -28,7 +28,7 @@ export default function DrawerLeft(props) {
   const {authProps} = props;
 
   const [state, setState] = React.useState({
-    left: true,
+    left: false,
   });
 
   const toggleDrawer = (side, open) => event => {
