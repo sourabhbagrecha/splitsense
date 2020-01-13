@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, Checkbox, FormControlLabel, Dialog, DialogContent, Divider, DialogTitle } from '@material-ui/core';
 import { PieChart } from '@material-ui/icons';
 import {splitNames} from '../constants.js';
 import SplitDialog from './SplitDialog.js';
 import { AddExpenseContext } from '../Contexts/addExpenseProvider';
-
+import UserContext from '../Contexts/userContext.js';
+import firebase from '../firebaseConfig';
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -29,7 +30,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function AddExpenseForm(props) {  
+function AddExpenseForm(props) { 
+  console.log(useContext(UserContext))
+  const {history} = props;
   const classes = useStyles();
   const {
     handleSplitMethodChange,
@@ -38,6 +41,7 @@ function AddExpenseForm(props) {
     handleAmountChange, 
     handleTitleChange,
     toggleSplitDialog,
+    splitBetween,
     paidByDialog, 
     resetValues, 
     splitMethod,
@@ -72,6 +76,15 @@ function AddExpenseForm(props) {
   }
   const updateAmount = (e) => {
     handleAmountChange(e);
+  }
+  const handleSave = async () => {
+      try {
+        const db = firebase.firestore();
+        const dbFun = await db.collection('expenses').add({title, amount: totalAmount, category: "groceries", currency: "INR", description: "Healthy", splitBetween, paidBy: [], createdBy: 'Sourabh', splitMethod});
+        history.push(`/expense/${dbFun.id}`)
+      } catch (error) {
+        console.error(error)
+      }
   }
   return (
     <Container maxWidth="xs">
@@ -151,11 +164,11 @@ function AddExpenseForm(props) {
             </Dialog>
           </>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSave}
           >
             Save
           </Button>

@@ -1,10 +1,7 @@
 import React from 'react';
 
-import withFirebaseAuth from 'react-with-firebase-auth'
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import firebaseConfig from './firebaseConfig';
-
+import withFirebaseAuth from 'react-with-firebase-auth';
+import firebase from './firebaseConfig';
 import './App.css';
 import Homepage from './Homepage';
 import { Switch, Route } from 'react-router-dom';
@@ -13,9 +10,10 @@ import AddExpense from './Add Expense';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { deepPurple, red } from '@material-ui/core/colors';
 import Expense from './Expense';
+import UserContext from './Contexts/userContext';
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseAppAuth = firebaseApp.auth();
+
+const firebaseAppAuth = firebase.auth();
 const providers = {
   googleProvider: new firebase.auth.GoogleAuthProvider(),
 };
@@ -39,18 +37,20 @@ function App(props) {
     signOut,
     signInWithGoogle,
   } = props;
-  const authProps =  { user, signOut, signInWithGoogle }
+  const authProps =  { user, signOut, signInWithGoogle };
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <Switch>
-          <Route exact path="/" render={() => <Homepage authProps={authProps} />} />
-          <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
-          <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
-          <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
-          <Route exact path="/friend/:id/add-expense" render={(routeProps) => <AddExpense {...routeProps} />} />
-        </Switch>
-      </div>
+      <UserContext.Provider value={user}>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" render={() => <Homepage authProps={authProps} />} />
+            <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
+            <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
+            <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
+            <Route exact path="/friend/:id/add-expense" render={(routeProps) => <AddExpense {...routeProps} />} />
+          </Switch>
+        </div>
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

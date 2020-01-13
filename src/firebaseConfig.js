@@ -1,3 +1,7 @@
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/auth';
+
 const config = {
   apiKey: "AIzaSyCW5niW2oBzp0niXAHpNIHya04K8IeGyr8",
   authDomain: "splitsense-app.firebaseapp.com",
@@ -8,4 +12,8 @@ const config = {
   appId: "1:105000818031:web:fda19d4f34b68ece3ec49a",
   measurementId: "G-VTKFPCGSH3"
 };
-export default config;
+
+firebase.initializeApp(config);
+firebase.firestore();
+
+export default firebase;

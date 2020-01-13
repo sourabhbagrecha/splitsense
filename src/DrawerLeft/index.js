@@ -25,11 +25,7 @@ const useStyles = makeStyles({
 
 export default function DrawerLeft(props) {
   const classes = useStyles();
-  const {
-    user,
-    signOut,
-    signInWithGoogle,
-  } = props.authProps;
+  const {authProps} = props;
 
   const [state, setState] = React.useState({
     left: true,
@@ -52,7 +48,7 @@ export default function DrawerLeft(props) {
     >
       <List>
           <ListItem>
-            <GoogleSignInButton  {...props.authProps} />
+            <GoogleSignInButton  {...authProps} />
           </ListItem>
       </List>
       <Divider />

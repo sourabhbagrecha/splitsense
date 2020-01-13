@@ -72,7 +72,7 @@ export const expenseData = {
   currency: "INR",
   description: "Healthy",
   paidBy: [{ person: "Amay", amount: 30 }, { person: "Harit", amount: 30 }, { person: "Shubham", amount: 30 }, { person: "Prit", amount: 30 }],
-  splitBy: splitBetweenData,
+  splitBetween: splitBetweenData,
   createdBy: "Amay",
   belongsTo: "Flat",
   splitMethod: "equally"

@@ -24,7 +24,7 @@ export function AddExpenseProvider(props) {
             splitEqually, 
             splitByShare, 
             resetValues, 
-        } = useSplitBetweenState(props.splitBetweenData);
+        } = useSplitBetweenState(props.splitBetween);
     return(
         <AddExpenseContext.Provider 
             value={{

@@ -10,20 +10,20 @@ function AddExpense(props) {
   const id = editMode ? props.match.params.id : "";
   const expenseData = expenseDataArray.find((v) => v.id === id)
   const splitMethod = editMode ? expenseData.splitMethod : "equally";
-  const splitBy = editMode ? expenseData.splitBy : splitBetweenData;
+  const splitBetween = editMode ? expenseData.splitBetween : splitBetweenData;
   const amount = editMode ? expenseData.amount : 0;
   const title = editMode ? expenseData.title : "";
   return (
     <Container maxWidth='xs'>
       <AddExpenseProvider
-        splitBetweenData={splitBy}
+        splitBetween={splitBetween}
         splitMethod={splitMethod}
         editMode={editMode}
         title={title}  
         amount={amount}
         id={id}
       >
-        <AddExpenseForm/>
+        <AddExpenseForm history={props.history}/>
       </AddExpenseProvider>
     </Container>
   )
