@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, CssBaseline, LinearProgress } from '@material-ui/core';
+import { Container, CssBaseline } from '@material-ui/core';
 import ExpenseHeader from './ExpenseHeader';
 import ExpenseBody from './ExpenseBody';
 import firebase from '../firebaseConfig';
-import { expenseDataArray } from '../dummyData';
-import LoadingBar from '../LoadingBar';
 
 function Expense(props) {
   const {id} = props.match.params;
@@ -12,6 +10,7 @@ function Expense(props) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch();
+    // eslint-disable-next-line
   }, [])
   const db = firebase.firestore();
   const fetch = async () => {

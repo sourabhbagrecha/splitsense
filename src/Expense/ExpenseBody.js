@@ -3,8 +3,6 @@ import { Typography, makeStyles, Button } from '@material-ui/core';
 import { PersonOutline, DeleteOutline } from '@material-ui/icons';
 import SplitEntry from './SplitEntry';
 import { red } from '@material-ui/core/colors';
-import firebase from '../firebaseConfig';
-import { expenseData } from '../dummyData';
 import LoadingBar from '../LoadingBar';
 
 const useStyles = makeStyles( theme => ({

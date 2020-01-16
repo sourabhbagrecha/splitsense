@@ -22,6 +22,7 @@ function AddExpense(props) {
         title={title}  
         amount={amount}
         id={id}
+        currency="INR"
       >
         <AddExpenseForm history={props.history}/>
       </AddExpenseProvider>

@@ -10,6 +10,8 @@ import { useTheme, CssBaseline } from '@material-ui/core';
 import Friends from '../Friends';
 import SwipeableViews from 'react-swipeable-views';
 import DrawerLeft from '../DrawerLeft';
+import Groups from '../Groups';
+import PanelActions from './PanelActions';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,6 +54,25 @@ const useStyles = makeStyles(theme => ({
   },
   Container: {
     padding: '0px'
+  },
+  panelContainer: {
+      position: "relative",
+      height: "85vh",
+      overflow: "visible",
+      scrollbarWidth: "0px"
+  },
+  panelActionIcon: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
+  },
+  firstIcon: {
+    float: "right"
+  },
+  secondIcon: {
+    float: "right", 
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   }
 }));
 
@@ -78,21 +99,26 @@ export default function Homepage(props) {
             <Tab label="Activity" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel className={classes.tabPanelRoot} value={value} index={0}>
-            <Friends/>
-          </TabPanel>
-          <TabPanel className={classes.tabPanelRoot} value={value} index={1}>
-            <Friends/>
-          </TabPanel>
-          <TabPanel className={classes.tabPanelRoot} value={value} index={2}>
-            <Friends/>
-          </TabPanel>
-        </SwipeableViews>
+        <div className={classes.panelContainer}>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+          >
+            <TabPanel className={classes.tabPanelRoot} value={value} index={0}>
+              <Friends/>
+            </TabPanel>
+            <TabPanel className={classes.tabPanelRoot} value={value} index={1}>
+              <Groups/>
+            </TabPanel>
+            <TabPanel className={classes.tabPanelRoot} value={value} index={2}>
+              <Friends/>
+            </TabPanel>
+          </SwipeableViews>
+          <div className={classes.panelActionIcon}>
+            <PanelActions value={value} />
+          </div>
+        </div>
       </div>
     </DrawerLeft>
   );

@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, Checkbox, FormControlLabel, Dialog, DialogContent, Divider, DialogTitle } from '@material-ui/core';
+import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, Checkbox, FormControlLabel, Dialog, DialogContent, Divider, DialogTitle, MenuItem, Grid } from '@material-ui/core';
 import { PieChart } from '@material-ui/icons';
 import {splitNames} from '../constants.js';
 import SplitDialog from './SplitDialog.js';
 import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 import UserContext from '../Contexts/userContext.js';
 import firebase from '../firebaseConfig';
+import { currencies } from '../currencyData.js';
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -27,6 +29,9 @@ const useStyles = makeStyles(theme => ({
   dialogTextField: {
     width: "30%",
     float: "right"
+  },
+  currencySelect: {
+    width: 40
   }
 }));
 
@@ -50,7 +55,9 @@ function AddExpenseForm(props) {
     editMode,
     paidBy,
     title,
-    } = useContext(AddExpenseContext);
+    currency, 
+    setCurrency
+  } = useContext(AddExpenseContext);
   const handleDialogClose = () => {
     toggleSplitDialog(false);
     togglePaidByDialog(false);
@@ -80,7 +87,7 @@ function AddExpenseForm(props) {
   const handleSave = async () => {
       try {
         const db = firebase.firestore();
-        const dbFun = await db.collection('expenses').add({title, amount: totalAmount, category: "groceries", currency: "INR", description: "Healthy", splitBetween, paidBy: [], createdBy: 'Sourabh', splitMethod});
+        const dbFun = await db.collection('expenses').add({title, amount: totalAmount, category: "groceries", currency, description: "Healthy", splitBetween, paidBy: [], createdBy: 'Sourabh', splitMethod});
         history.push(`/expense/${dbFun.id}`)
       } catch (error) {
         console.error(error)
@@ -105,13 +112,33 @@ function AddExpenseForm(props) {
             value={title} type="text"
             name="title"
           />
-          <TextField
-            value={totalAmount} name="amount"
-            onChange={updateAmount} required
-            variant="outlined" fullWidth
-            label="Amount" type="number"
-            margin="normal" id="amount"
-          />
+          <Grid container spacing={1}>
+            <Grid item xs>
+              <TextField
+                style={{maxWidth: 130}}
+                select
+                label="currency"
+                value={currency}
+                onChange={setCurrency}
+                variant="outlined" margin="normal"
+              >
+                {currencies.map(currency => (
+                  <MenuItem key={currency.code} value={currency.code}>
+                    {currency.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs>
+              <TextField
+                value={totalAmount === 0 ? "" : totalAmount} name="amount"
+                onChange={updateAmount} required
+                variant="outlined" 
+                label="Amount" type="number"
+                margin="normal" id="amount"
+              />
+            </Grid>
+          </Grid>
           <>
             <Button 
               onClick={() => (toggleSplitDialog(true))}

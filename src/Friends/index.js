@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,18 +8,17 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import { PersonOutline } from '@material-ui/icons';
+import UserContext from '../Contexts/userContext';
+import Axios from 'axios';
+import { serverUrl } from '../constants';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    [theme.breakpoints.down("sm")]: {
-      width: "100vw"
-    }
-  }
+  
 }));
 
-function generate(classes, theme) {
-  return ['Amay', 'Prit', 'Harit', 'Shubham', 'Tushar', 'Simran', 'Saloni', 'Sundar Pichai'].map(value =>
-    <Link to={`/friend/${value}`} className={classes.friend} style={{textDecoration: 'none', color: 'black'}}>
+function generate(friends, classes, theme) {
+  return friends.map(friend =>
+    <Link key={Math.random()*10000000} to={`/friend/${friend._id}`} className={classes.friend} style={{textDecoration: 'none', color: 'black'}}>
       <ListItem style={{borderTop: "1px solid #cfcdc8"}}>
         <ListItemAvatar>
           <Avatar style={{color: "white", backgroundColor: theme.palette.secondary.main}}>
@@ -27,7 +26,7 @@ function generate(classes, theme) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={value}
+          primary={friend.name.full}
           secondary="You owe nothing"
         />
       </ListItem>
@@ -35,21 +34,36 @@ function generate(classes, theme) {
   );
 }
 
-export default function Friends() {
+function Friends(props) {
   const classes = useStyles();
   const theme = useTheme();
-
+  const {user} = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+  const [friends, setFriends] = useState([]);
+  useEffect(() =>  {
+    if(user){
+      fetchFriends(user)
+    }
+  }, [user])
+  const fetchFriends = async (user) => {
+    const response = await Axios.post(`${serverUrl}/friend/fetch-all`,{googleId: user.providerData[0].uid});
+    console.log(response);
+    setFriends(response.data.friends);
+    setLoading(false);
+  }
   return (
-    <div>
+    <div className={classes.root}>
       <Typography variant="h6" style={{paddingLeft: theme.spacing(2)}}>
         You owe: $249,<br/>
         You are owed: $100
       </Typography>
       <div className={classes.demo}>
         <List>
-          {generate(classes, theme)}
+          {!loading && generate(friends, classes, theme)}
         </List>
       </div>
     </div>
   );
 }
+
+export default Friends;
