@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
 
 function SplitEntry(props) {
-  const {id, person, amount, icon} = props
+  // const {id, person, amount, icon} = props
+  const {id, amount, icon} = props
   const theme = useTheme();
   return (
   <Link to={`/friend/${id}`} style={{textDecoration: 'none', color: 'black'}}>
@@ -15,7 +16,7 @@ function SplitEntry(props) {
       </ListItemAvatar>
       <ListItemText
         style={{textDecoration: 'none'}}
-        primary={person}
+        primary={"Sourabh"}
         secondary={amount}
       />
     </ListItem>

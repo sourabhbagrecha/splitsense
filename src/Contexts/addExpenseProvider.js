@@ -13,7 +13,8 @@ export function AddExpenseProvider(props) {
     const [splitDialogOpen, toggleSplitDialog] = useState(false);
     const [paidByDialog, togglePaidByDialog] = useState(false);
     const [paidBy, setPaidBy] = useState(paidByData);
-    const [currency, setCurrency] = useInputState(props.defaultCurrency || 'INR')
+    const [currency, setCurrency] = useInputState(props.defaultCurrency || 'INR');
+    const [category, setCategory] = useInputState(props.category || 'General');
     const editMode = props.editMode;
     const {
             calculatePercentage,
@@ -53,7 +54,9 @@ export function AddExpenseProvider(props) {
                 paidBy,
                 title,
                 currency, 
-                setCurrency
+                setCurrency,
+                category,
+                setCategory
             }}
         >
             {props.children}

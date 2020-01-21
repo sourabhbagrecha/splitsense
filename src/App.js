@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import withFirebaseAuth from 'react-with-firebase-auth';
 import firebase from './firebaseConfig';
@@ -13,6 +13,8 @@ import Expense from './Expense';
 import UserContext from './Contexts/userContext';
 import CreateGroup from './CreateGroup';
 import AddFriend from './AddFriend';
+import { AlertProvider } from './Contexts/AlertContext';
+import Layout from './Layout';
 
 
 const firebaseAppAuth = firebase.auth();
@@ -40,23 +42,27 @@ function App(props) {
     signInWithGoogle,
   } = props;
   const authProps =  { user, signOut, signInWithGoogle };
-  useEffect(() =>  console.log(user ? user.providerData[0].uid : "No user"), [user]);
+  // useEffect(() =>  console.log(user ? user.providerData[0].uid : "No user"), [user]);
   return (
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{user}}>
-        <div className="App">
-          <Switch>
-            <Route exact path="/" render={() => <Homepage authProps={authProps} />} />
-            <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
-            <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
-            <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
-            <Route exact path="/friend/new" render={(routeProps) => <AddFriend {...routeProps} />} />
-            <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
-            <Route exact path="/group/new" render={(routeProps) => <CreateGroup {...routeProps} />} />
-            <Route exact path="/friend/:id/add-expense" render={(routeProps) => <AddExpense friend {...routeProps} />} />
-            <Route exact path="/group/:id/add-expense" render={(routeProps) => <AddExpense group {...routeProps} />} />
-          </Switch>
-        </div>
+        <AlertProvider>
+          <div className="App">
+            <Layout>
+              <Switch>
+                <Route exact path="/" render={() => <Homepage authProps={authProps} />} />
+                <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
+                <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
+                <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
+                <Route exact path="/friend/new" render={(routeProps) => <AddFriend {...routeProps} />} />
+                <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
+                <Route exact path="/group/new" render={(routeProps) => <CreateGroup {...routeProps} />} />
+                <Route exact path="/friend/:friendId/add-expense" render={(routeProps) => <AddExpense friend={true} {...routeProps} />} />
+                <Route exact path="/group/:groupId/add-expense" render={(routeProps) => <AddExpense group={true} {...routeProps} />} />
+              </Switch>
+            </Layout>
+          </div>
+        </AlertProvider>
       </UserContext.Provider>
     </ThemeProvider>
   );

@@ -24,14 +24,15 @@ const useStyles = makeStyles( theme => ({
 }))
 
 function ExpenseBody(props) {
-  const {splitBetween, loading} = props
+  const {splitBy, loading} = props;
+  console.log(props)
   const classes = useStyles();
   return (
     <>
       <Typography variant="subtitle1" className={classes.sDetailsTitle} >
         Split Details
       </Typography>
-      {loading ? <LoadingBar/> : splitBetween.map(s => <SplitEntry key={s.id} {...s} icon={<PersonOutline />} />) } 
+      {loading ? <LoadingBar height={100}/> : splitBy.map(s => <SplitEntry key={s._id} {...s} icon={<PersonOutline />} />) } 
       <div className={classes.deleteButtonContainer}><Button className={classes.deleteExpense} variant="contained" startIcon={<DeleteOutline />}>Delete Expense</Button></div>
     </>
   )

@@ -13,6 +13,7 @@ import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import GoogleSignInButton from './GoogleSignInButton';
+import { useLocalStorageState } from '../Hooks/useLocalStorageState';
 
 const useStyles = makeStyles({
   list: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
 export default function DrawerLeft(props) {
   const classes = useStyles();
   const {authProps} = props;
-
+  const [userLocal, setUserLocal] = useLocalStorageState("user");
   const [state, setState] = React.useState({
     left: false,
   });
@@ -48,7 +49,7 @@ export default function DrawerLeft(props) {
     >
       <List>
           <ListItem>
-            <GoogleSignInButton  {...authProps} />
+            <GoogleSignInButton  {...authProps}  setUserLocal={setUserLocal} userLocal={userLocal} />
           </ListItem>
       </List>
       <Divider />

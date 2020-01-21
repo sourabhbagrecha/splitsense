@@ -1,20 +1,40 @@
 import React, { useContext, useEffect } from 'react';
-import { FormControlLabel, TextField, Checkbox, makeStyles } from '@material-ui/core';
+import { FormControlLabel, TextField, Checkbox, makeStyles, Avatar } from '@material-ui/core';
 import { AddExpenseContext } from '../Contexts/addExpenseProvider';
+import { PersonOutline } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   dialogTextField: {
     width: "30%",
     float: "right"
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+    display: "inline-block"
+  },
   formControlAdditionalInfo: {
     width: '40%', 
     overflow: 'hidden'
+  },
+  avatarName: {
+    position: 'relative',
+    height: "100%"
+  },
+  avatarNameText: {
+    margin: 0,
+    position: 'absolute',
+    top: '20%',
+    msTransform: "translateY(-50%)",
+    transform: "translateY(-50%)"
   }
 }));
 
 function SplitItemEntry(props) {
-  const {id, person, amount, enabled, percentage, share, splitMethod, handleShareChange} = props;
+  useEffect(() => {
+    console.log(props);
+  }, [])
+  const {_id, name, amount, enabled, percentage, share, splitMethod, handleShareChange, picture} = props;
   const {toggleSplitEnabled, splitEqually, splitUnequally, splitByPercentage, splitByShare, totalAmount, splitBetween, calculateShare, calculatePercentage} = useContext(AddExpenseContext);
   const classes = useStyles();
   const handleSplitUnequally = (e) => {
@@ -43,16 +63,27 @@ function SplitItemEntry(props) {
       default: splitEqually(totalAmount);
         break;
     }
-  }, [splitBetween, totalAmount, calculateShare, splitMethod, calculatePercentage, splitEqually])
+  }, [splitBetween, totalAmount, calculateShare, splitMethod, calculatePercentage, splitEqually]);
+  const labelThings = 
+  <>
+    <Avatar className={classes.small} src={picture}>
+      <PersonOutline />
+    </Avatar>
+    <span className={classes.avatarName}>
+      <span className={classes.avatarNameText}>
+        {name}
+      </span>
+    </span>
+  </>;
   const percentageSplit = 
   <>
     <span>
-        <FormControlLabel className={classes.formControlAdditionalInfo} control={<Checkbox size="medium" value={person} onChange={() => toggleSplitEnabled(id)} />} label={person} checked={enabled} />
+        <FormControlLabel className={classes.formControlAdditionalInfo} control={<Checkbox size="medium" value={name} onChange={() => toggleSplitEnabled(_id)} />} label={labelThings} checked={enabled} />
         <span style={{fontSize: '0.7rem'}}>{amount}</span>
     </span>
     <span>
       <TextField 
-        inputProps={{personid: id}} 
+        inputProps={{personid: _id}} 
         disabled={!enabled} 
         className={classes.dialogTextField} 
         value={percentage === 0 ? '': percentage}
@@ -67,11 +98,11 @@ function SplitItemEntry(props) {
   const equalSplit = 
   <>
     <span>
-        <FormControlLabel control={<Checkbox size="medium" value={person} onChange={() => toggleSplitEnabled(id)} />} label={person} checked={enabled} />
+        <FormControlLabel control={<Checkbox size="medium" value={name} onChange={() => toggleSplitEnabled(_id)} />} label={labelThings} checked={enabled} />
     </span>
     <span>
       <TextField 
-        inputProps={{personid: id}} 
+        inputProps={{personid: _id}} 
         disabled
         className={classes.dialogTextField} 
         value={amount === 0 ? '': amount}
@@ -86,12 +117,12 @@ function SplitItemEntry(props) {
   const shareSplit = 
   <>
     <span>
-      <FormControlLabel className={classes.formControlAdditionalInfo} control={<Checkbox size="medium" value={person} onChange={() => toggleSplitEnabled(id)} />} label={person} checked={enabled} />
+      <FormControlLabel className={classes.formControlAdditionalInfo} control={<Checkbox size="medium" value={name} onChange={() => toggleSplitEnabled(_id)} />} label={labelThings} checked={enabled} />
       <span style={{fontSize: '0.7rem'}}>{amount}</span>
     </span>
     <span>
       <TextField 
-        inputProps={{personid: id}} 
+        inputProps={{personid: _id}} 
         disabled={!enabled} 
         className={classes.dialogTextField} 
         value={share === 0 ? '': share}
@@ -106,11 +137,11 @@ function SplitItemEntry(props) {
   const unequalSplit = 
   <>
     <span>
-        <FormControlLabel control={<Checkbox size="medium" value={person} onChange={() => toggleSplitEnabled(id)} />} label={person} checked={enabled} />
+        <FormControlLabel control={<Checkbox size="medium" value={name} onChange={() => toggleSplitEnabled(_id)} />} label={labelThings} checked={enabled} />
     </span>
     <span>
       <TextField 
-        inputProps={{personid: id}} 
+        inputProps={{personid: _id}} 
         disabled={!enabled} 
         className={classes.dialogTextField} 
         value={amount === 0 ? '': amount}

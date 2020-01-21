@@ -4,18 +4,24 @@ import Axios from 'axios';
 import { serverUrl } from '../constants';
 
 function GoogleSignInButton(props) {
-  const { user, signOut, signInWithGoogle } = props;
+  const { user, signOut, signInWithGoogle, setUserLocal } = props;
   const signIn = async (e) => {
-    const response = await signInWithGoogle(e);
-    const {profile, isNewUser} = response.additionalUserInfo;
-    const googleId = response.user.providerData[0].uid
-    const responseId = await Axios.post(`${serverUrl}/helper/find-by-googleid`, {googleId});
-    const {id} = responseId.data;
-    window.localStorage.setItem("user", JSON.stringify({profile, isNewUser, googleId, serverId: id}))
-    return isNewUser ? Axios.post(`${serverUrl}/user/new`, {profile, isNewUser}) : null
+    try {
+      const response = await signInWithGoogle(e);
+      const {idToken} = response.credential;
+      const {profile, isNewUser} = response.additionalUserInfo;
+      setUserLocal({idToken});
+      if(isNewUser){
+        console.log(await Axios.post(`${serverUrl}/user/new`, {profile, isNewUser}))
+      }
+      const checkAuth = await Axios.get(`${serverUrl}/helper/check-auth`, {headers: { Authorization: JSON.stringify({idToken}) }});
+      console.log("CheckAuth:::>>", checkAuth.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const signOutHandler = async (e) => {
-    window.localStorage.setItem("user", "");
+    setUserLocal("");
     signOut();
   }
   return (

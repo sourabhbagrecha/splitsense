@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Typography, CssBaseline, Container, TextField, makeStyles, Button } from '@material-ui/core'
 import useInputState from '../Hooks/useInputState';
-import UserContext from '../Contexts/userContext';
 import Axios from 'axios';
 import { serverUrl } from '../constants';
 import InvitationDialog from './InvitationDialog';
+import { authHeader } from '../utils/authHeader';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -21,10 +21,10 @@ const useStyles = makeStyles(theme => ({
 
 
 function AddFriend(props) {
-  const {user} = useContext(UserContext);
   const classes = useStyles();
+  const {history} = props;
   const [email, setEmail] = useInputState('');
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const openInvitationDialog = () => {
     setOpen(true);
   };
@@ -32,19 +32,17 @@ function AddFriend(props) {
     setOpen(false);
   }
   const addFriendSubmit = async e => {
-    const requesterId = user.providerData[0].uid;
     const accepterEmail = email;
     const defaultCurrency = 'INR';
-
-    const response = await Axios.post(`${serverUrl}/helper/check-user-existence`, { email });
-    console.log(response);
+    const response = await Axios.post(`${serverUrl}/helper/check-user-existence`, { email }, authHeader);
     if(response.status === 204){
       openInvitationDialog();
       return;
     }
     else if(response.status === 200){
-      const response = await Axios.post(`${serverUrl}/friend/new`, {requesterId, accepterEmail, defaultCurrency});
-      console.log(response);
+      const response = await Axios.post(`${serverUrl}/friend/new`, {accepterEmail, defaultCurrency}, authHeader);
+      const friendId = response.data.friend._id;
+      return history.push(`/friend/${friendId}`);
     }
   }
   return (

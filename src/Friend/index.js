@@ -1,48 +1,35 @@
-import React from 'react';
-import { Add, LocalGroceryStoreOutlined } from '@material-ui/icons';
-import { Typography, Container, Fab, makeStyles, CssBaseline, useTheme } from '@material-ui/core';
-import { expenseDataArray } from '../dummyData';
-import ExpenseEntry from './ExpenseEntry';
-
-const useStyles = makeStyles(theme => ({
-  fabContainer: {
-    position: 'relative'
-  },
-  fab: {
-    position: 'absolute',
-    zIndex: '2',
-    bottom: theme.spacing(-3),
-    right: theme.spacing(3),
-  },
-}));
-
-function generate() {
-  console.log(expenseDataArray)
-  return expenseDataArray.map(e => <ExpenseEntry key={e.id} id={e.id} title={e.title} amount={e.amount} icon={<LocalGroceryStoreOutlined />}/>)
-}
+import React, { useEffect, useState } from 'react';
+import { Container, CssBaseline } from '@material-ui/core';
+import Axios from 'axios';
+import { serverUrl } from '../constants';
+import { authHeader } from '../utils/authHeader';
+import FriendHeader from './FriendHeader';
+import FriendBody from './FriendBody';
 
 function Friend(props) {
   const {id} = props.match.params;
-  const classes = useStyles();
-  const theme = useTheme();
+  const [loading, setLoading] = useState(true);
+  const [friend, setFriend] = useState({});
+  const [friendPerson, setFriendPerson] = useState({});
+  const [activities, setActivities] = useState([]);
+  useEffect(() => {
+    fetchFriend();
+    //eslint-disable-next-line
+  }, []);
+  const fetchFriend = async () => {
+    const response = await Axios.get(`${serverUrl}/friend/${id}`, authHeader);
+    console.log("::::::::::::>>>>>>>", response);
+    setFriend(response.data.friend);
+    setFriendPerson(response.data.friendPerson);
+    setActivities(response.data.activities);
+    setLoading(false);
+  }
+
   return ( 
     <Container style={{padding: 0}} maxWidth="xs">
       <CssBaseline />
-      <div style={{color: 'white', backgroundColor: theme.palette.primary.main, padding: '1rem'}} className={classes.fabContainer}>
-        <Typography variant="h4">
-          {id}
-        </Typography>
-        <Typography variant="caption">
-          {id}@gmail.com
-        </Typography>
-        <Typography variant="subtitle1">
-          You are owed: $100
-        </Typography>
-        <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => props.history.push(`/friend/${id}/add-expense`)}>
-          <Add />
-        </Fab>
-      </div>
-      {generate()}
+      {!loading && <FriendHeader friend={friend} friendPerson={friendPerson} history={props.history} />}
+      {!loading && <FriendBody activities={activities} />}
     </Container>
   )
 }

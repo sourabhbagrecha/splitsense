@@ -27,11 +27,11 @@ function ExpenseHeader(props) {
       <Typography variant="h4">
         {loading ? <LoadingBar height={42}/> : expenseData.title}
       </Typography>
-      <Typography variant="caption">
+      <Typography variant="subtitle1">
         {loading ? <LoadingBar height={15} /> : `${expenseData.currency} ${expenseData.amount}`}
       </Typography>
-      <Typography variant="subtitle1">
-        {loading ? <LoadingBar height={28}/> : <>Added by {expenseData.createdBy} <Moment fromNow>{new Date(1578851877173)}</Moment></>}
+      <Typography variant="caption">
+        {loading ? <LoadingBar height={28}/> : <>Added by {expenseData.createdBy.name.full} <Moment fromNow>{new Date(expenseData.createdAt)}</Moment></>}
       </Typography>
       <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => props.history.push(`/expense/${id}/edit`)}>
         <Edit />
@@ -40,4 +40,4 @@ function ExpenseHeader(props) {
   )
 }
 
-export default ExpenseHeader
+export default ExpenseHeader;

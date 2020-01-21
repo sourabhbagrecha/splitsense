@@ -4,7 +4,7 @@ export const splitBetweenData = [
     person: "Amay",
     enabled: false,
     percentage: 0,
-    amount: 50,
+    amount: 0,
     share: 0 
   },
 
@@ -13,7 +13,7 @@ export const splitBetweenData = [
     person: "Harit",
     enabled: true,
     percentage: 0,
-    amount: 50,
+    amount: 0,
     share: 0 
   },
 
@@ -22,7 +22,7 @@ export const splitBetweenData = [
     person: "Shubham",
     enabled: true,
     percentage: 0,
-    amount: 50,
+    amount: 0,
     share: 0 
   },
 
@@ -31,7 +31,7 @@ export const splitBetweenData = [
     person: "Prit",
     enabled: true,
     percentage: 0,
-    amount: 50,
+    amount: 0,
     share: 0 
   }
 ];
