@@ -1,7 +1,11 @@
-import React from 'react';
-import { Typography, makeStyles, TextField, Button, Container, FormControl, InputLabel, Select, MenuItem, CssBaseline, Chip } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Typography, makeStyles, TextField, Button, Container, FormControl, InputLabel, Select, MenuItem, CssBaseline, Chip, Avatar } from '@material-ui/core';
 import useInputState from '../Hooks/useInputState';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { currencies } from '../currencyData';
+import Axios from 'axios';
+import { serverUrl } from '../constants';
+import { authHeader } from '../utils/authHeader';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -27,9 +31,6 @@ const useStyles = makeStyles(theme => ({
     margin: "0 -20px",
     color: "white",
   },
-  currencySelector: {
-    marginTop: theme.spacing(2)
-  },
   memberSelector: {
     marginTop: theme.spacing(2)
   },
@@ -40,14 +41,33 @@ const useStyles = makeStyles(theme => ({
 
 function CreateGroup(props) {
   const classes = useStyles();
+  const {history} = props;
   const [name, setName] = useInputState('');
   const [groupType, setGroupType] = useInputState('');
   const [currency, setCurrency] = useInputState('INR');
+  const [friends, setFriends] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
+    fetchFriends();
   }, []);
+  const fetchFriends = async () => {
+    const response = await Axios.get(`${serverUrl}/friend/group-meta`, authHeader);
+    console.log(response);
+    setFriends(response.data.friends);
+    setLoading(false);
+  }
+  const handleAcChange = (e, value) => {
+    setMembers(value.map(v => v._id))
+  }
+  const handleSave = async e => {
+    e.preventDefault();
+    const response = await Axios.post(`${serverUrl}/group/new`, {name, groupType, members, currency}, authHeader);
+    history.push(`/group/${response.data.groupId}`);
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline/>
@@ -58,7 +78,7 @@ function CreateGroup(props) {
             margin="normal"
             required
             fullWidth
-            label="Group Name"
+            label="Name"
             name="name"
             autoFocus
             onChange={setName}
@@ -66,7 +86,7 @@ function CreateGroup(props) {
           />
           <FormControl required fullWidth variant="outlined" className={classes.formControl}>
             <InputLabel ref={inputLabel}>
-              Group Type
+              Type
             </InputLabel>
             <Select
               value={groupType}
@@ -83,66 +103,53 @@ function CreateGroup(props) {
             </Select>
           </FormControl>
           <div className={classes.memberSelector}>
-            <Autocomplete
-              multiple
-              options={top100Films}
-              getOptionLabel={option => option.title}
-              defaultValue={[top100Films[6], top100Films[13]]}
-              renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip label={option.title} {...getTagProps({ index })} disabled={index === 0} />
-                ))
-              }
-              renderInput={params => (
-                <TextField
-                  {...params}
-                  label="Group Members"
-                  variant="outlined"
-                  placeholder="Add Members"
-                  fullWidth
-                />
-              )}
-            />
+            { !loading && 
+              <Autocomplete
+                multiple
+                autoComplete={true}
+                options={friends}
+                getOptionLabel={friend => friend.name.full}
+                defaultValue={[friends[0]]}
+                onChange={handleAcChange}
+                free
+                renderTags={(value, getTagProps) =>
+                  value.map((option, index) => (
+                    <Chip avatar={<Avatar src={option.picture}></Avatar>} disabled={index === 0} label={option.name.full} {...getTagProps({ index })} />
+                  ))
+                }
+                renderInput={params => (
+                  <TextField
+                    {...params}
+                    label="Members"
+                    variant="outlined"
+                    placeholder="Group Members"
+                    fullWidth
+                  />
+                )}
+              />
+            }
           </div>
-          <FormControl required fullWidth variant="outlined" className={classes.currencySelector}>
-            <InputLabel ref={inputLabel}>
-              Default Currency
-            </InputLabel>
-            <Select
+          <div className={classes.currencySelector}>
+            <TextField
+              fullWidth
+              select
+              label="Default Currency"
               value={currency}
               onChange={setCurrency}
-              labelWidth={labelWidth}
+              variant="outlined" margin="normal"
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value="INR">INR - Indian Rupees</MenuItem>
-              <MenuItem value="USD">USD - United States Dollar</MenuItem>
-              <MenuItem value="AUD">AUD - Australian Dollar</MenuItem>
-              <MenuItem value="EUR">EUR - Euro</MenuItem>
-            </Select>
-          </FormControl>
-          {/* <div className={classes.photoSelector}>  
-          <label htmlFor="contained-button-file">
-          <input
-            accept="image/*"
-            className={classes.input}
-            id="contained-button-file"
-            multiple
-            type="file"
-          />
-            <Button variant="contained" color="primary" component="span">
-              Upload
-            </Button>
-          </label>
-            
-    
-          </div> */}
+              {currencies.map(currency => (
+                <MenuItem key={currency.code} value={currency.code}>
+                  {`${currency.symbol_native} ${currency.code} ${currency.name}`}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="secondary"
+            onClick={handleSave}
             className={classes.submit}
           >
             Save
@@ -152,25 +159,4 @@ function CreateGroup(props) {
   )
 }
 
-export default CreateGroup
-
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-  { title: 'The Lord of the Rings: The Fellowship of the Ring', year: 2001 },
-  { title: 'Star Wars: Episode V - The Empire Strikes Back', year: 1980 },
-  { title: 'Forrest Gump', year: 1994 },
-  { title: 'Inception', year: 2010 },
-  { title: 'The Lord of the Rings: The Two Towers', year: 2002 },
-  { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-  { title: 'Goodfellas', year: 1990 },
-  { title: 'The Matrix', year: 1999 }
-]
+export default CreateGroup;

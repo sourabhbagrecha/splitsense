@@ -4,83 +4,83 @@ import { HomeOutlined, AccountBalanceOutlined, EventSeatOutlined, ReceiptOutline
 export const Categories = [
   {
     "name": "General",
-    "icon": <MenuOutlined />
+    "icon": <MenuOutlined fontSize="inherit" />
   },
   {
     "name": "Accomodation",
-    "icon": <HomeOutlined/>
+    "icon": <HomeOutlined fontSize="inherit" />
   },
   {
     "name": "Banks",
-    "icon": <AccountBalanceOutlined/>
+    "icon": <AccountBalanceOutlined fontSize="inherit" />
   },
   {
     "name": "Beauty",
-    "icon": <EventSeatOutlined />
+    "icon": <EventSeatOutlined fontSize="inherit" />
   },
   {
     "name": "Bills / Utilities",
-    "icon": <ReceiptOutlined />
+    "icon": <ReceiptOutlined fontSize="inherit" />
   },
   {
     "name": "Education",
-    "icon": <CastForEducationOutlined/>
+    "icon": <CastForEducationOutlined fontSize="inherit" />
   },
   {
     "name": "Electronics",
-    "icon": <DevicesOutlined />
+    "icon": <DevicesOutlined fontSize="inherit" />
   },
   {
     "name": "Entertainment",
-    "icon": <MovieOutlined />
+    "icon": <MovieOutlined fontSize="inherit" />
   },
   {
     "name": "Events",
-    "icon": <EventOutlined />
+    "icon": <EventOutlined fontSize="inherit" />
   },
   {
     "name": "Fashion",
-    "icon": <NotInterestedOutlined />
+    "icon": <NotInterestedOutlined fontSize="inherit" />
   },
   {
     "name": "Food",
-    "icon": <FastfoodOutlined />
+    "icon": <FastfoodOutlined fontSize="inherit" />
   },
   {
     "name": "Tips, Donations, etc...",
-    "icon": <MoneyOutlined />
+    "icon": <MoneyOutlined fontSize="inherit" />
   },
   {
     "name": "Grocery",
-    "icon": <LocalGroceryStoreOutlined />
+    "icon": <LocalGroceryStoreOutlined fontSize="inherit" />
   },
   {
     "name": "Health & Fitness",
-    "icon": <FitnessCenter />
+    "icon": <FitnessCenter fontSize="inherit" />
   },
   {
     "name": "Household Expenses",
-    "icon": <HouseOutlined />
+    "icon": <HouseOutlined fontSize="inherit" />
   },
   {
     "name": "Investment",
-    "icon": <LocalAtmOutlined />
+    "icon": <LocalAtmOutlined fontSize="inherit" />
   },
   {
     "name": "Pets",
-    "icon": <PetsOutlined />
+    "icon": <PetsOutlined fontSize="inherit" />
   },
   {
     "name": "People",
-    "icon": <PeopleOutline />
+    "icon": <PeopleOutline fontSize="inherit" />
   },
   {
     "name": "Software",
-    "icon": <SettingsOutlined />
+    "icon": <SettingsOutlined fontSize="inherit" />
   },
   {
     "name": "Transport",
-    "icon": <DriveEtaOutlined />
+    "icon": <DriveEtaOutlined fontSize="inherit" />
   },
 ]
 

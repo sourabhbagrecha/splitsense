@@ -5,7 +5,7 @@ export default function useSplitBetweenState(defaultVal) {
     splitBetween,
     toggleSplitEnabled : (personId) => {
       const newSplitBetween = splitBetween.map(p => {
-        return p.id === personId ? {...p, enabled: !p.enabled} : p;
+        return p.user === personId ? {...p, enabled: !p.enabled} : p;
       })
       setSplitBetween(newSplitBetween);
     },
@@ -19,19 +19,19 @@ export default function useSplitBetweenState(defaultVal) {
     },
     splitUnequally : (totalAmount, personId, amount) => {
       const newSplitBetween = splitBetween.map(p => {
-        return p.enabled === true ? (p.id === personId ? {...p, amount: amount} : p) : {...p, amount: 0, share: 0, percentage: 0}
+        return p.enabled === true ? (p.user === personId ? {...p, amount: amount} : p) : {...p, amount: 0, share: 0, percentage: 0}
       })
       setSplitBetween(newSplitBetween);
     },
     splitByPercentage : (totalAmount, personId, percentage) => {
       const newSplitBetween = splitBetween.map(p => {
-        return p.enabled === true ? (p.id === personId ? {...p, percentage} : p) : {...p, amount: 0, share: 0, percentage: 0}
+        return p.enabled === true ? (p.user === personId ? {...p, percentage} : p) : {...p, amount: 0, share: 0, percentage: 0}
       })
       setSplitBetween(newSplitBetween);      
     },
     splitByShare : (totalAmount, personId, share) => {
       const newSplitBetween = splitBetween.map(p => {
-        return p.enabled === true ? (p.id === personId ? {...p, share} : p) : {...p, amount: 0, share: 0, percentage: 0}
+        return p.enabled === true ? (p.user === personId ? {...p, share} : p) : {...p, amount: 0, share: 0, percentage: 0}
       })
       setSplitBetween(newSplitBetween);
     },

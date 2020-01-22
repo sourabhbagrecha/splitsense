@@ -1,5 +1,4 @@
 import React from 'react';
-
 import withFirebaseAuth from 'react-with-firebase-auth';
 import firebase from './firebaseConfig';
 import './App.css';
@@ -8,13 +7,14 @@ import { Switch, Route } from 'react-router-dom';
 import Friend from './Friend';
 import AddExpense from './Add Expense';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { deepPurple, red } from '@material-ui/core/colors';
+import { blue, pink } from '@material-ui/core/colors';
 import Expense from './Expense';
 import UserContext from './Contexts/userContext';
 import CreateGroup from './CreateGroup';
 import AddFriend from './AddFriend';
 import { AlertProvider } from './Contexts/AlertContext';
 import Layout from './Layout';
+import Group from './Group';
 
 
 const firebaseAppAuth = firebase.auth();
@@ -24,8 +24,8 @@ const providers = {
 
 const theme = createMuiTheme({
   palette: {
-    primary: deepPurple,
-    secondary: red,
+    primary: blue,
+    secondary: pink,
     primary2: {
       main: "#7e57c2"
     }
@@ -57,6 +57,7 @@ function App(props) {
                 <Route exact path="/friend/new" render={(routeProps) => <AddFriend {...routeProps} />} />
                 <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
                 <Route exact path="/group/new" render={(routeProps) => <CreateGroup {...routeProps} />} />
+                <Route exact path="/group/:id" render={(routeProps) => <Group {...routeProps} />} />
                 <Route exact path="/friend/:friendId/add-expense" render={(routeProps) => <AddExpense friend={true} {...routeProps} />} />
                 <Route exact path="/group/:groupId/add-expense" render={(routeProps) => <AddExpense group={true} {...routeProps} />} />
               </Switch>

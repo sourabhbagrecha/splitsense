@@ -32,7 +32,7 @@ function ExpenseBody(props) {
       <Typography variant="subtitle1" className={classes.sDetailsTitle} >
         Split Details
       </Typography>
-      {loading ? <LoadingBar height={100}/> : splitBy.map(s => <SplitEntry key={s._id} {...s} icon={<PersonOutline />} />) } 
+      {loading ? <LoadingBar height={100}/> : splitBy.map(s => <SplitEntry key={s._id} {...s} />) } 
       <div className={classes.deleteButtonContainer}><Button className={classes.deleteExpense} variant="contained" startIcon={<DeleteOutline />}>Delete Expense</Button></div>
     </>
   )

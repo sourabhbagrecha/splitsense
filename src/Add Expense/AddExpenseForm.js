@@ -77,7 +77,7 @@ function AddExpenseForm(props) {
     const from = e.target.getAttribute('from');
     const amount = e.target.value;
     const updateFunction = s => {
-      if(s.id === personId) {
+      if(s.user === personId) {
         return {...s, amount: amount};
       }
       return s;

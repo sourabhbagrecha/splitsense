@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AddExpenseForm from './AddExpenseForm';
 import { Container } from '@material-ui/core';
-import { AddExpenseProvider } from '../Contexts/addExpenseProvider';
 import { splitBetweenData, expenseDataArray } from "../dummyData";
 import Axios from 'axios';
 import { serverUrl } from '../constants';
@@ -28,7 +26,7 @@ function AddExpense(props) {
     const partResponse = await Axios.get(`${serverUrl}/expense/participants/${friendId}`, authHeader);
     const {participants} = partResponse.data;
     setSplitBetween(participants.map(p => (  { 
-      id: p._id,
+      user: p._id,
       name: p.name.full,
       picture: p.picture,
       enabled: true,

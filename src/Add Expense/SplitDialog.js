@@ -31,6 +31,7 @@ function SplitDialog(props) {
             handleShareChange={handleShareChange}
             splitMethod={splitMethod}
             key={s._id}
+            _id={s.user}
             {...s}
           />
         )
