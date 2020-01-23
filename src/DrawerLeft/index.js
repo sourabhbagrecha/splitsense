@@ -14,6 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import GoogleSignInButton from './GoogleSignInButton';
 import { useLocalStorageState } from '../Hooks/useLocalStorageState';
+import { HomeOutlined } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   list: {
@@ -54,12 +56,12 @@ export default function DrawerLeft(props) {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        <Link to="/" style={{textDecoration: "none"}}>
+          <ListItem button key="Home">
+            <ListItemIcon> <HomeOutlined/> </ListItemIcon>
+            <ListItemText primary="Home" />
           </ListItem>
-        ))}
+        </Link>
       </List>
     </div>
   );

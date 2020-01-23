@@ -50,7 +50,7 @@ function App(props) {
           <div className="App">
             <Layout>
               <Switch>
-                <Route exact path="/" render={() => <Homepage authProps={authProps} />} />
+                <Route exact path="/" render={(routeProps) => <Homepage authProps={authProps} {...routeProps} />} />
                 <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
                 <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
                 <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />

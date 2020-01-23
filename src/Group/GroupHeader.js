@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Typography, Fab, makeStyles, useTheme } from '@material-ui/core';
-import { PersonOutline, Add, GroupOutlined } from '@material-ui/icons';
+import { Add, GroupOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {

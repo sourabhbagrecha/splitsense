@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -12,6 +12,8 @@ import SwipeableViews from 'react-swipeable-views';
 import DrawerLeft from '../DrawerLeft';
 import Groups from '../Groups';
 import PanelActions from './PanelActions';
+
+const TabsArray = ['friends', 'groups', 'activity'];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,17 +81,32 @@ const useStyles = makeStyles(theme => ({
 export default function Homepage(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const {search} = props.location;
+  const query = search.split("=")[1];
   const [value, setValue] = React.useState(0);
-
+  useEffect(() => {
+    let index = TabsArray.findIndex(v => v === query);
+    if(index < 0){
+      index = 0
+    }
+    setValue(index)
+  }, [search]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+      props.history.push({
+        pathname: '/',
+        search: `?tab=${TabsArray[newValue]}`
+      });
   };
   const handleChangeIndex = index => {
+    props.history.push({
+      pathname: '/',
+      search: `?tab=${TabsArray[index]}`
+    });
     setValue(index);
   };
-
   return (
-    <DrawerLeft authProps={ props.authProps } >
+    <>
       <CssBaseline />
       <div className={classes.root}>
         <AppBar position="static">
@@ -120,6 +137,6 @@ export default function Homepage(props) {
           </div>
         </div>
       </div>
-    </DrawerLeft>
+    </>
   );
 }

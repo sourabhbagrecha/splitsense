@@ -6,6 +6,7 @@ import { serverUrl } from '../constants';
 import { authHeader } from '../utils/authHeader';
 import { Categories } from '../categoriesData';
 import { currencies } from '../currencyData';
+import ListItemLoader from '../Loaders/ListItemLoader';
 
 function Entry(props) {
   const {_id, refId, actType, operation} = props;
@@ -22,7 +23,9 @@ function Entry(props) {
     setLoading(false)
   }
   return (
-    !loading && 
+    loading ?
+    <ListItemLoader/>
+    : 
     <Link to={`/${actType}/${meta._id}`} style={{textDecoration: 'none', color: 'black'}}>
       <ListItem divider>
         <ListItemAvatar>

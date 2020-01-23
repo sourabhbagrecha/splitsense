@@ -9,7 +9,7 @@ import AddExpenseMain from './AddExpenseMain';
 function AddExpense(props) {
   const {history, match} = props;
   const {path, params} = props.match;
-  const {friendId} = params;
+  const {friendId, groupId} = params;
   const editMode = path === '/expense/:id/edit';
   const id = editMode ? props.match.params.id : "";
   const expenseData = expenseDataArray.find((v) => v.id === id)
@@ -23,7 +23,7 @@ function AddExpense(props) {
     fetchPart();
   }, [])
   const fetchPart = async () => {
-    const partResponse = await Axios.get(`${serverUrl}/expense/participants/${friendId}`, authHeader);
+    const partResponse = await Axios.get(`${serverUrl}/${friend ? "friend" : "group"}/participants/${friend ? friendId : groupId}`, authHeader);
     const {participants} = partResponse.data;
     setSplitBetween(participants.map(p => (  { 
       user: p._id,

@@ -1,6 +1,5 @@
 import React from 'react';
 import Entry from './Entry';
-import { Divider } from '@material-ui/core';
 
 function FriendBody(props) {
   const {activities} = props;
