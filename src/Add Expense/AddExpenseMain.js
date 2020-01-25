@@ -3,11 +3,11 @@ import AddExpenseForm from './AddExpenseForm';
 import { AddExpenseProvider } from '../Contexts/addExpenseProvider';
 
 function AddExpenseMain(props) {
-  const {splitBetween, splitMethod, editMode, title, amount, id, history, match, friend, group} = props
-
+  const {splitBetween, splitMethod, editMode, paidBy, title, amount, id, history, match, friend, group} = props;
   return (
     <AddExpenseProvider
       splitBetween={splitBetween}
+      paidBy={paidBy}
       splitMethod={splitMethod}
       editMode={editMode}
       title={title}  
@@ -25,4 +25,4 @@ function AddExpenseMain(props) {
   )
 }
 
-export default AddExpenseMain
+export default AddExpenseMain;

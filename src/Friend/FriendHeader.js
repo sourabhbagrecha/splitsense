@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Typography, Fab, makeStyles, useTheme } from '@material-ui/core';
 import { PersonOutline, Add } from '@material-ui/icons';
+import HeaderLoader from '../Loaders/HeaderLoader';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {
@@ -15,12 +16,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function FriendHeader(props) {
-  const {friendPerson, friend, history} = props;
+  const {friendPerson, friend, history, loading} = props;
   const classes = useStyles();
   const theme = useTheme();
   console.log(friendPerson, friend);
 
   return (
+    loading ? 
+    <HeaderLoader/>
+    :
     <div style={{color: 'white', backgroundColor: theme.palette.primary.main, padding: '1rem'}} className={classes.fabContainer}>
       <div style={{display: "flex"}}>
         <Avatar variant="rounded" src={friendPerson.picture} style={{backgroundColor: theme.palette.secondary.main, height: "4rem", width: "4rem"}} >

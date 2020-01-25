@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
-import { splitBetweenData, expenseDataArray } from "../dummyData";
+import { expenseDataArray } from "../dummyData";
 import Axios from 'axios';
 import { serverUrl } from '../constants';
 import { authHeader } from '../utils/authHeader';
@@ -14,7 +14,8 @@ function AddExpense(props) {
   const id = editMode ? props.match.params.id : "";
   const expenseData = expenseDataArray.find((v) => v.id === id)
   const splitMethod = editMode ? expenseData.splitMethod : "equally";
-  const [splitBetween, setSplitBetween] = useState(editMode ? expenseData.splitBetween : splitBetweenData);
+  const [splitBetween, setSplitBetween] = useState(editMode ? expenseData.splitBetween : []);
+  const [paidBy, setPaidBy] = useState()
   const amount = editMode ? expenseData.amount : 0;
   const title = editMode ? expenseData.title : "";
   const {friend, group} = props;
@@ -33,6 +34,13 @@ function AddExpense(props) {
       percentage: 0,
       amount: 0,
       share: 0 
+    })));
+    setPaidBy(participants.map(p => ({
+      user: p._id,
+      name: p.name.full,
+      picture: p.picture,
+      enabled: false,
+      amount: 0
     })))
     setLoading(false);
   }
@@ -41,6 +49,7 @@ function AddExpense(props) {
       {!loading && 
         <AddExpenseMain
           splitBetween={splitBetween}
+          paidBy={paidBy}
           splitMethod={splitMethod}
           editMode={editMode}
           history={history}

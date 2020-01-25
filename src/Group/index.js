@@ -26,8 +26,8 @@ function Group(props) {
   return ( 
     <Container style={{padding: 0}} maxWidth="xs">
       <CssBaseline />
-      {!loading && <GroupHeader group={group} history={props.history} />}
-      {!loading && <GroupBody activities={activities} />}
+      <GroupHeader loading={loading} group={group} history={props.history} />
+      <GroupBody activities={activities} />
     </Container>
   )
 }

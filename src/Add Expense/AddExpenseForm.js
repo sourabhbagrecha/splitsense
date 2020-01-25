@@ -9,6 +9,7 @@ import { currencies } from '../currencyData.js';
 import { Categories } from '../categoriesData.js';
 import { AlertContext } from '../Contexts/AlertContext.js';
 import { authHeader } from '../utils/authHeader.js';
+import PaidByDialog from './PaidByDialog.js';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -105,7 +106,7 @@ function AddExpenseForm(props) {
   }
   const handleSave = async () => {
       try {
-        const expenseResponse = await Axios.post(`${serverUrl}${urlParams()}/expense/new`, {title, amount: totalAmount, category, currency, description: "Healthy", splitBy: splitBetween, paidBy: [], createdBy: 'Sourabh', splitMethod}, authHeader);
+        const expenseResponse = await Axios.post(`${serverUrl}${urlParams()}/expense/new`, {title, amount: totalAmount, category, currency, description: "Healthy", splitBy: splitBetween, paidBy, createdBy: 'Sourabh', splitMethod}, authHeader);
         console.log("ding ding ding ding:::>>>", expenseResponse.data);
         setAlert(true, "Expense Added", "success");
         history.push(`/expense/${expenseResponse.data.expense._id}`)
@@ -193,42 +194,7 @@ function AddExpenseForm(props) {
               handleShareChange={handleShareChange} 
               toggleSplitEnabled={toggleSplitEnabled} 
             />
-            <Button 
-              onClick={() => (togglePaidByDialog(true))} 
-              color="secondary"
-              style={{float: "right"}}
-              variant="outlined"
-            >
-              Paid By: You
-            </Button>
-            <Dialog open={paidByDialog} className={classes.dialog} onClose={handleDialogClose} >
-              <DialogTitle>Paid By:</DialogTitle>
-              <DialogContent>
-                {paidBy.map(({id, person, amount, enabled}) => (
-                <div key={id}>
-                  <div>
-                    <span>
-                      <FormControlLabel control={<Checkbox value={person} />} label={person} checked={enabled} />
-                    </span>
-                    <span>
-                      <TextField 
-                        inputProps={{personid: id, from: "paidBy"}}
-                        className={classes.dialogTextField} 
-                        value={amount === 0 ? '': amount} 
-                        onChange={handleShareChange} 
-                        variant="standard" 
-                        size="small"
-                        label="Amt"
-                      />
-                    </span>
-                  </div>
-                  <br/>
-                </div>
-                ))}
-                <Divider/>
-                <Button onClick={handleDialogClose}>Done</Button>
-              </DialogContent>
-            </Dialog>
+            <PaidByDialog paidByDialog={paidByDialog} classes={classes} paidBy={paidBy} handleShareChange={handleShareChange} handleDialogClose={handleDialogClose} />
           </>
           <Button
             fullWidth

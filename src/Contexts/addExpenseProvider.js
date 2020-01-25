@@ -12,7 +12,7 @@ export function AddExpenseProvider(props) {
     const [title, handleTitleChange] = useInputState(props.title);
     const [splitDialogOpen, toggleSplitDialog] = useState(false);
     const [paidByDialog, togglePaidByDialog] = useState(false);
-    const [paidBy, setPaidBy] = useState(paidByData);
+    const [paidBy, setPaidBy] = useState(props.paidBy);
     const [currency, setCurrency] = useInputState(props.defaultCurrency || 'INR');
     const [category, setCategory] = useInputState(props.category || 'General');
     const editMode = props.editMode;
@@ -27,6 +27,7 @@ export function AddExpenseProvider(props) {
             splitByShare, 
             resetValues, 
         } = useSplitBetweenState(props.splitBetween);
+    console.log(":::::::::>>>>>>>>",paidBy);
     return(
         <AddExpenseContext.Provider 
             value={{

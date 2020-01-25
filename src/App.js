@@ -15,6 +15,7 @@ import AddFriend from './AddFriend';
 import { AlertProvider } from './Contexts/AlertContext';
 import Layout from './Layout';
 import Group from './Group';
+import About from './About';
 
 
 const firebaseAppAuth = firebase.auth();
@@ -48,9 +49,10 @@ function App(props) {
       <UserContext.Provider value={{user}}>
         <AlertProvider>
           <div className="App">
-            <Layout>
+            <Layout authProps={authProps}>
               <Switch>
-                <Route exact path="/" render={(routeProps) => <Homepage authProps={authProps} {...routeProps} />} />
+                <Route exact path="/" render={(routeProps) => <Homepage {...routeProps} />} />
+                <Route exact path="/about" render={(routeProps) => <About {...routeProps} />} />
                 <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
                 <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
                 <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />

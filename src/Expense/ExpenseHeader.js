@@ -4,6 +4,7 @@ import { Typography, Fab, makeStyles, Avatar, useTheme } from '@material-ui/core
 import Moment from 'react-moment';
 import LoadingBar from '../LoadingBar';
 import { Categories } from '../categoriesData';
+import HeaderLoader from '../Loaders/HeaderLoader';
 
 // const useStyles = makeStyles(theme => ({
 //   fabContainer: {
@@ -37,6 +38,9 @@ function ExpenseHeader(props) {
   const classes = useStyles();
   const theme = useTheme();
   return (
+    loading ? 
+    <HeaderLoader/>
+    :
     <div style={{color: 'white', backgroundColor: theme.palette.primary.main, padding: '1rem'}} className={classes.fabContainer}>
       <div style={{display: "flex"}}>
         <Avatar variant="rounded" style={{backgroundColor: theme.palette.secondary.main, height: "4rem", width: "4rem", fontSize: "3rem" }} >
@@ -58,8 +62,6 @@ function ExpenseHeader(props) {
         <Edit />
       </Fab>
     </div>
-
-
   )
 }
 

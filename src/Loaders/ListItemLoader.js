@@ -9,12 +9,12 @@ function ListItemLoader(props) {
       <ListItem divider>
         <ListItemAvatar>
           <Avatar>
-            <Skeleton variant="circle" width={40} height={40} />
+            <Skeleton animation="wave" variant="circle" width={40} height={40} />
           </Avatar>
         </ListItemAvatar>
         <ListItemText>
-          <Skeleton variant="text" width={100} height={25} />
-          <Skeleton variant="text" width={100} height={15} />
+          <Skeleton animation="wave" variant="text" width={100} height={25} />
+          <Skeleton animation="wave" variant="text" width={100} height={15} />
         </ListItemText>
       </ListItem>  
   )

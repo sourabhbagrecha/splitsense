@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Typography, Fab, makeStyles, useTheme } from '@material-ui/core';
 import { Add, GroupOutlined } from '@material-ui/icons';
+import HeaderLoader from '../Loaders/HeaderLoader';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {
@@ -15,10 +16,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function GroupHeader(props) {
-  const {group, history} = props;
+  const {group, history, loading} = props;
   const classes = useStyles();
   const theme = useTheme();
   return (
+    loading ?
+    <HeaderLoader/>
+    :
     <div style={{color: 'white', backgroundColor: theme.palette.primary.main, padding: '1rem'}} className={classes.fabContainer}>
       <div style={{display: "flex"}}>
         <Avatar variant="rounded" src={group.picture||null} style={{backgroundColor: theme.palette.secondary.main, height: "4rem", width: "4rem", fontSize: "4rem"}} >

@@ -10,9 +10,10 @@ function Layout(props) {
     handleAlertClose,
     alertType,
     alertMsg } = useContext(AlertContext);
+  const { authProps } = props;
   return (
     <div>
-      <DrawerLeft authProps={ props.authProps }>
+      <DrawerLeft authProps={ authProps }>
         <div style={{ marginTop: "1rem"}}>
           {props.children}
           <Snackbar open={alertOpen} autoHideDuration={5000} onClose={handleAlertClose}>

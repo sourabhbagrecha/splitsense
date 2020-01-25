@@ -1,9 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ListItemLoader from '../Loaders/ListItemLoader'
-import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core'
-import { GroupOutlined } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import ListItemLoader from '../Loaders/ListItemLoader';
+import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
+import { GroupOutlined } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 function GroupItem(props) {
   const theme = useTheme();

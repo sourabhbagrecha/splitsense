@@ -25,13 +25,10 @@ function Expense(props) {
   return (
     <Container style={{padding: 0}} maxWidth="xs">
       <CssBaseline />
-      {
-        !loading && 
         <>
           <ExpenseHeader id={id} loading={loading} expenseData={expenseData} history={props.history} />
           <ExpenseBody {...expenseData} loading={loading} />
         </>
-      }
     </Container>
   )
 }

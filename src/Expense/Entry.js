@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
 import { PersonOutline } from '@material-ui/icons';
+import { getName } from '../utils/userIdLocal';
 
-function SplitEntry(props) {
+function Entry(props) {
   const {amount} = props
   const {_id, name, picture} = props.user;
   const theme = useTheme();
@@ -16,7 +17,7 @@ function SplitEntry(props) {
         </Avatar>
       </ListItemAvatar>
       <ListItemText
-        primary={name.full}
+        primary={getName(_id, name.full)}
         secondary={amount}
       />
     </ListItem>
@@ -24,4 +25,4 @@ function SplitEntry(props) {
     
   )
 }
-export default SplitEntry;
+export default Entry;

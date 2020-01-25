@@ -28,8 +28,8 @@ function Friend(props) {
   return ( 
     <Container style={{padding: 0}} maxWidth="xs">
       <CssBaseline />
-      {!loading && <FriendHeader friend={friend} friendPerson={friendPerson} history={props.history} />}
-      {!loading && <FriendBody activities={activities} />}
+      <FriendHeader loading={loading} friend={friend} friendPerson={friendPerson} history={props.history} />
+      <FriendBody activities={activities} />
     </Container>
   )
 }

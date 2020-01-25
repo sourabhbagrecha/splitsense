@@ -4,7 +4,7 @@ import { HomeOutlined, AccountBalanceOutlined, EventSeatOutlined, ReceiptOutline
 export const Categories = [
   {
     "name": "General",
-    "icon": <MenuOutlined fontSize="inherit" />
+    "icon": <ReceiptOutlined fontSize="inherit" />
   },
   {
     "name": "Accomodation",
