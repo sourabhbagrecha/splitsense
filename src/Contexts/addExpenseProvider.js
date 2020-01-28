@@ -2,13 +2,13 @@ import React, { createContext, useState } from "react";
 import useSplitBetweenState from "../Hooks/useSplitBetweenState";
 import useInputState from "../Hooks/useInputState";
 import {splitNames} from '../constants.js';
-import { paidByData } from "../dummyData";
+import useNumberInputState from "../Hooks/useNumberInputState";
 
 export const AddExpenseContext = createContext();
 
 export function AddExpenseProvider(props) {
     const [splitMethod, handleSplitMethodChange] = useInputState(props.splitMethod);
-    const [totalAmount, handleAmountChange] = useInputState(props.amount);
+    const [totalAmount, handleAmountChange] = useNumberInputState(props.amount);
     const [title, handleTitleChange] = useInputState(props.title);
     const [splitDialogOpen, toggleSplitDialog] = useState(false);
     const [paidByDialog, togglePaidByDialog] = useState(false);
@@ -27,7 +27,6 @@ export function AddExpenseProvider(props) {
             splitByShare, 
             resetValues, 
         } = useSplitBetweenState(props.splitBetween);
-    console.log(":::::::::>>>>>>>>",paidBy);
     return(
         <AddExpenseContext.Provider 
             value={{

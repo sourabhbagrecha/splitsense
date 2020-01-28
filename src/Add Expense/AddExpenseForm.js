@@ -10,6 +10,8 @@ import { Categories } from '../categoriesData.js';
 import { AlertContext } from '../Contexts/AlertContext.js';
 import { authHeader } from '../utils/authHeader.js';
 import PaidByDialog from './PaidByDialog.js';
+import { userId } from '../utils/userIdLocal.js';
+import { cleanUpAndDistribute } from './utils/cleanUpAndDistribute.js';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -76,7 +78,7 @@ function AddExpenseForm(props) {
   const handleShareChange = e => {
     const personId = e.target.getAttribute('personid');
     const from = e.target.getAttribute('from');
-    const amount = e.target.value;
+    const amount = parseFloat(e.target.value);
     const updateFunction = s => {
       if(s.user === personId) {
         return {...s, amount: amount};
@@ -104,15 +106,59 @@ function AddExpenseForm(props) {
       return ``
     }
   }
-  const handleSave = async () => {
-      try {
-        const expenseResponse = await Axios.post(`${serverUrl}${urlParams()}/expense/new`, {title, amount: totalAmount, category, currency, description: "Healthy", splitBy: splitBetween, paidBy, createdBy: 'Sourabh', splitMethod}, authHeader);
+  const validateForm = () => {
+    let splitSum = 0;
+    let paidSum = 0;
+    splitBetween.forEach(v => {
+      splitSum += v.amount;
+    });
+    paidBy.forEach(v => {
+      paidSum += parseFloat(v.amount);
+    })
+    console.log(paidBy)
+    if(title.trim().length === 0){
+      setAlert(true, "Please enter a valid title", "error");
+      return false;
+    }
+    if(totalAmount <= 0 ){
+      setAlert(true, "The total amount must be greater than 0.", "error");
+      return false;
+    }
+    if(parseFloat(totalAmount) !== splitSum){
+      setAlert(true, "The total amount should be completely distributed among the members. \n Check the splits before saving!", "error");
+      return false;
+    }
+    if(parseFloat(totalAmount) !== paidSum){
+      setAlert(true, `The total amount should be completely paid by the particpants(either individually or collectively.) Check the "Paid By" before saving.`, "error");
+      return false;
+    }
+    // alert("Sab sahi h, sab changa si!");
+    return true;
+  }
+
+  const handleSave = async (e) => {
+    try {
+      e.preventDefault();
+      if(validateForm()){
+        const data = {
+          title, 
+          amount: totalAmount, 
+          category, 
+          currency, 
+          description: "Healthy", 
+          splitBy: splitBetween, 
+          paidBy: cleanUpAndDistribute(totalAmount, paidBy), 
+          createdBy: userId, 
+          splitMethod
+        };
+        const expenseResponse = await Axios.post(`${serverUrl}${urlParams()}/expense/new`, data, authHeader);
         console.log("ding ding ding ding:::>>>", expenseResponse.data);
         setAlert(true, "Expense Added", "success");
         history.push(`/expense/${expenseResponse.data.expense._id}`)
-      } catch (error) {
-        console.error(error)
       }
+    } catch (error) {
+      console.error(error)
+    }
   }
   return (
     <Container maxWidth="xs">
@@ -197,6 +243,7 @@ function AddExpenseForm(props) {
             <PaidByDialog paidByDialog={paidByDialog} classes={classes} paidBy={paidBy} handleShareChange={handleShareChange} handleDialogClose={handleDialogClose} />
           </>
           <Button
+            type="submit"
             fullWidth
             variant="contained"
             color="primary"

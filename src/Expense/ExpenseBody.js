@@ -5,10 +5,12 @@ import Entry from './Entry';
 import { red } from '@material-ui/core/colors';
 import LoadingBar from '../LoadingBar';
 import ListItemLoader from '../Loaders/ListItemLoader';
+import MyResponsivePie from './MyResponsivePie';
 
 const useStyles = makeStyles( theme => ({
   subsectionTitle: {
-    padding: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(1)
   },
   deleteExpense: {
     marginTop: "2rem",
@@ -21,11 +23,16 @@ const useStyles = makeStyles( theme => ({
   deleteButtonContainer: {
     display: "flex",
     justifyContent: "center"
+  },
+  pieChart: {
+    height: "15rem",
+    width: "20rem",
+    margin: "-2rem auto"
   }
 }))
 
 function ExpenseBody(props) {
-  const {splitBy, paidBy, loading} = props;
+  const {splitBy, paidBy, loading, currency} = props;
   console.log(props)
   const classes = useStyles();
   return (
@@ -36,7 +43,12 @@ function ExpenseBody(props) {
       <Typography variant="subtitle1" className={classes.subsectionTitle} >
         Split Details
       </Typography>
-      {loading ? <LoadingBar height={100}/> : splitBy.map(s => s.amount > 0 && <Entry key={s._id} {...s} />) } 
+      <div className={classes.pieChart}>
+        <MyResponsivePie data={splitBy} currency={currency}/>
+      </div>
+      <div>
+        <Typography variant="caption"> Click on the Chart for more details</Typography>
+      </div>
       <Typography variant="subtitle1" className={classes.subsectionTitle} >
         Paid By:
       </Typography>

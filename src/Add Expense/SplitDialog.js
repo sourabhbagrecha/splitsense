@@ -6,10 +6,6 @@ import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 function SplitDialog(props) {
   const {handleSplitMethodChange, handleDialogClose, handleShareChange} = props
   const {splitBetween, toggleSplitEnabled, splitDialogOpen, splitMethod, splitNames} = useContext(AddExpenseContext);
-  useEffect(() => {
-    console.log(splitBetween);
-  }, [])
-
   return (
     <Dialog open={splitDialogOpen} onClose={handleDialogClose} >
       <DialogTitle>Split Between</DialogTitle>
