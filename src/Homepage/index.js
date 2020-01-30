@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 export default function Homepage(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const {search} = props.location;
+  const { search } = props.location;
   const query = search.split("=")[1];
   const [value, setValue] = React.useState(0);
   useEffect(() => {

@@ -27,7 +27,7 @@ function Friends(props) {
       <div>
         <List>
           {friends.map(friend =>
-            <FriendItem friend={friend} loading={loading} />
+            <FriendItem key={friend._id} friend={friend} loading={loading} />
           )}
         </List>
       </div>

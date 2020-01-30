@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Typography, makeStyles, TextField, Button, Container, FormControl, InputLabel, Select, MenuItem, CssBaseline, Chip, Avatar } from '@material-ui/core';
+import { Typography, makeStyles, TextField, Button, Container, FormControl, InputLabel, Select, MenuItem, CssBaseline, Chip, Avatar, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
 import useInputState from '../Hooks/useInputState';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { currencies } from '../currencyData';
 import Axios from 'axios';
 import { serverUrl } from '../constants';
 import { authHeader } from '../utils/authHeader';
+import { ExpandMore } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -154,6 +155,22 @@ function CreateGroup(props) {
           >
             Save
           </Button>
+          <div>
+            <ExpansionPanel>
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMore />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Advanced Options</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>
+                  Create group with some initial balances. Remember, that the complete sum of all the balance must be equal to zero.
+                </Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+          </div>
         </form>
     </Container>
   )

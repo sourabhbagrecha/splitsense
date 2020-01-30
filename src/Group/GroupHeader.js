@@ -5,6 +5,7 @@ import HeaderLoader from '../Loaders/HeaderLoader';
 import BalancesDialog from './BalancesDialog';
 import useDialogCloseState from '../Hooks/useDialogCloseState';
 import { balanceMsg } from '../utils/balanceMsg';
+import SettleUpDialog from './SettleUpDialog';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {
@@ -63,10 +64,12 @@ function GroupHeader(props) {
           size="small"
           color="default"
           aria-label="add"
+          onClick={e => handleSettleUpOpen(e)}
         >
           <AccountBalanceWallet />
           Settle Up
         </Fab>
+        <SettleUpDialog transfers={group.transfers} settleUpOpen={settleUpDialog} handleSettleUpClose={handleSettleUpClose} />
       </div>
       <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => history.push(`/group/${group._id}/add-expense`)}>
         <Add />

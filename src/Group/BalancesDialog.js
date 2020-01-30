@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Dialog, DialogTitle, DialogContent, makeStyles } from '@material-ui/core';
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Dialog, DialogTitle, makeStyles } from '@material-ui/core';
 import { PersonOutline } from '@material-ui/icons';
 import { balanceMsg } from '../utils/balanceMsg';
 import { userId, getName } from '../utils/userIdLocal';

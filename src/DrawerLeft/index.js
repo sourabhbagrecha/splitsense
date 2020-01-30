@@ -58,7 +58,9 @@ export default function DrawerLeft(props) {
       <List>
         <Link to="/" style={{textDecoration: "none"}}>
           <ListItem button key="Home">
-            <ListItemIcon> <HomeOutlined/> </ListItemIcon>
+            <ListItemIcon>
+              <HomeOutlined/>
+            </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
         </Link>

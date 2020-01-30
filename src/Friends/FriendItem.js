@@ -16,7 +16,7 @@ function FriendItem(props) {
     loading ?
     <ListItemLoader/>
     :
-    <Link key={Math.random()*10000000} to={`/friend/${friend._id}`} style={{textDecoration: 'none', color: 'black'}}>
+    <Link key={friend._id} to={`/friend/${friend._id}`} style={{textDecoration: 'none', color: 'black'}}>
       <ListItem divider>
         <ListItemAvatar>
           <Avatar style={{color: "white", backgroundColor: theme.palette.secondary.main}} src={friend.picture}>
