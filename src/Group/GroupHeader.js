@@ -69,7 +69,7 @@ function GroupHeader(props) {
           <AccountBalanceWallet />
           Settle Up
         </Fab>
-        <SettleUpDialog transfers={group.transfers} settleUpOpen={settleUpDialog} handleSettleUpClose={handleSettleUpClose} />
+        <SettleUpDialog group={group} transfers={group.transfers} settleUpOpen={settleUpDialog} handleSettleUpClose={handleSettleUpClose} />
       </div>
       <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => history.push(`/group/${group._id}/add-expense`)}>
         <Add />

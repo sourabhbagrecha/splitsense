@@ -17,8 +17,10 @@ const settleUpPrimaryText = (from, to) => {
   )
 }
 
-const Entry = ({user, balance, role}) => (
-  <Link style={{textDecoration: 'none', color: 'black'}} to={`/payment?from=${role === "from" ? user._id : userId}&to=${role === "to" ? user._id : userId}&balance=${balance > 0 ? balance : -balance}`}>
+const Entry = ({user, balance, role, group}) => (
+  <Link 
+    style={{textDecoration: 'none', color: 'black'}} 
+    to={`/payment?from=${role === "from" ? user._id : userId}&to=${role === "to" ? user._id : userId}&amount=${balance > 0 ? balance : -balance}&belongsTo=${group._id}&belongsType=${"group"}`}>
     <ListItem button>
       <ListItemAvatar>
         <Avatar src={user.picture}>
@@ -48,7 +50,7 @@ const useStyles = makeStyles({
 });
 
 function SettleUpDialog(props) {
-  const {transfers, settleUpOpen, handleSettleUpClose} = props;
+  const {transfers, settleUpOpen, handleSettleUpClose, group} = props;
   const classes = useStyles();
   const [myTransfers, setMyTransfer] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,7 +80,7 @@ function SettleUpDialog(props) {
       <Dialog onClose={handleSettleUpClose} open={settleUpOpen}>
         <DialogTitle className={classes.title}>Settle Up</DialogTitle>
           <List className={classes.list}>
-            {myTransfers.map( t => <Entry key={t.user._id} user={t.user} balance={t.balance} role={t.role}/>)}
+            {myTransfers.map( t => <Entry key={t.user._id} group={group} user={t.user} balance={t.balance} role={t.role}/>)}
           </List>
       </Dialog>
     </>

@@ -7,6 +7,7 @@ import { authHeader } from '../utils/authHeader';
 import { Categories } from '../categoriesData';
 import { currencies } from '../currencyData';
 import ListItemLoader from '../Loaders/ListItemLoader';
+import { AccountBalanceWallet, AccountBalanceWalletOutlined } from '@material-ui/icons';
 
 function Entry(props) {
   const {_id, refId, actType, operation} = props;
@@ -30,12 +31,12 @@ function Entry(props) {
       <ListItem divider>
         <ListItemAvatar>
           <Avatar style={{backgroundColor: theme.palette.primary.main}}>
-            {Categories.find(c => c.name === meta.category).icon}
+            { actType === 'expense' ? Categories.find(c => c.name === meta.category).icon : <AccountBalanceWalletOutlined/>}
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={meta.title}
-          secondary={`${currencies.find(c => c.code === meta.currency).symbol_native} ${meta.amount}`}
+          primary={actType === "expense" ? meta.title : `${meta.from.name.full} paid ${meta.to.name.full}`}
+          secondary={actType === "expense" ? `${currencies.find(c => c.code === meta.currency).symbol_native} ${meta.amount}` : meta.amount}
         />
       </ListItem>
     </Link>    

@@ -9,7 +9,6 @@ import AddExpense from './Add Expense';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { blue, pink } from '@material-ui/core/colors';
 import Expense from './Expense';
-import UserContext from './Contexts/userContext';
 import CreateGroup from './CreateGroup';
 import AddFriend from './AddFriend';
 import { AlertProvider } from './Contexts/AlertContext';
@@ -47,10 +46,11 @@ function App(props) {
   // useEffect(() =>  console.log(user ? user.providerData[0].uid : "No user"), [user]);
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{user}}>
-        <AlertProvider>
-          <div className="App">
-            <Layout authProps={authProps}>
+      <AlertProvider>
+        <div className="App">
+          <Layout authProps={authProps}>
+            {
+              user ?
               <Switch>
                 <Route exact path="/" render={(routeProps) => <Homepage {...routeProps} />} />
                 <Route exact path="/about" render={(routeProps) => <About {...routeProps} />} />
@@ -65,10 +65,12 @@ function App(props) {
                 <Route exact path="/group/:groupId/add-expense" render={(routeProps) => <AddExpense group={true} {...routeProps} />} />
                 <Route exact path="/payment" render={(routeProps) => <AddPayment {...routeProps}/>} />
               </Switch>
-            </Layout>
-          </div>
-        </AlertProvider>
-      </UserContext.Provider>
+              :
+              <></>
+            }
+          </Layout>
+        </div>
+      </AlertProvider>
     </ThemeProvider>
   );
 }

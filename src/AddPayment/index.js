@@ -27,10 +27,19 @@ const useStyles = makeStyles(theme =>({
 
 function AddPayment(props) {
   const { search } = props.location;
-  let {from, to, balance} = getParams(search);
-  console.log(from, to)
-  const [amount, setAmount] = useState(balance);
+  const { history } = props;
+  let {from, to, belongsTo, belongsType} = getParams(search);
+  const [amount, setAmount] = useState(getParams(search).amount);
   const classes = useStyles();
+  const handleSave = async e => {
+    try {
+      e.preventDefault();
+      const {payment} = (await Axios.post(`${serverUrl}/payment/new`, {from, to, amount, belongsTo, belongsType}, authHeader)).data;
+      history.push(`/payment/${payment._id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <Container style={{padding: 0}} maxWidth="xs">
       <CssBaseline/>
@@ -42,10 +51,16 @@ function AddPayment(props) {
           </div>
           <UserCard user={to}/>
           <div className={classes.inputBasics}>
-            <TextField label="Amount" value={amount > 0 ? amount : ""} fullWidth variant="outlined" />
+            <TextField label="Amount" value={amount > 0 ? amount : ""} onChange={e => setAmount(e.target.value)} fullWidth variant="outlined" />
           </div>
           <div className={classes.inputBasics}>
-            <Button fullWidth variant="contained" color="secondary" startIcon={<Save />}>
+            <Button 
+              fullWidth 
+              color="secondary" 
+              variant="contained" 
+              startIcon={<Save />}
+              onClick={handleSave}
+            >
               Save
             </Button>
           </div>

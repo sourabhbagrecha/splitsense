@@ -17,6 +17,7 @@ function GoogleSignInButton(props) {
       const checkAuth = await Axios.get(`${serverUrl}/helper/check-auth`, {headers: { Authorization: JSON.stringify({idToken}) }});
       setUserLocal({idToken, userId: checkAuth.data.userId});
       console.log("CheckAuth:::>>", checkAuth.data);
+      window.localStorage.setItem("email", checkAuth.data.email);
     } catch (error) {
       console.log(error);
     }

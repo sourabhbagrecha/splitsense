@@ -21,7 +21,7 @@ function Group(props) {
     try {
       const response = await Axios.get(`${serverUrl}/group/${id}`, authHeader);
       const {group} = response.data;
-      console.log("::::::::::::>>>>>>>", group.balances.find(b => b.user._id === userId));
+      console.log("::::::::::::>>>>>>>", group.balances.map(b => b.user._id), userId);
       const balanceSelf = group.balances.find(b => b.user._id === userId).balance ;
       setGroup(group);
       setBalanceSelf(balanceSelf);
