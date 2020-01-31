@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CardHeader, Avatar, Card, makeStyles } from '@material-ui/core';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import ListItemLoader from '../Loaders/ListItemLoader';
 
@@ -17,7 +17,7 @@ function UserCard(props) {
   const [loading, setLoading] = useState(true);
   const classes = useStyles();
   useEffect(() => {
-    fetchParticipants();
+    fetchParticipants();// eslint-disable-next-line
   }, []);
   const fetchParticipants = async () => {
     try {

@@ -7,13 +7,10 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import GoogleSignInButton from './GoogleSignInButton';
-import { useLocalStorageState } from '../Hooks/useLocalStorageState';
 import { HomeOutlined } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
@@ -28,12 +25,10 @@ const useStyles = makeStyles({
 
 export default function DrawerLeft(props) {
   const classes = useStyles();
-  const {authProps} = props;
-  const [userLocal, setUserLocal] = useLocalStorageState("user");
+  const { authProps } = props;
   const [state, setState] = React.useState({
     left: false,
   });
-
   const toggleDrawer = (side, open) => event => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -51,7 +46,7 @@ export default function DrawerLeft(props) {
     >
       <List>
           <ListItem>
-            <GoogleSignInButton  {...authProps}  setUserLocal={setUserLocal} userLocal={userLocal} />
+            <GoogleSignInButton  {...authProps} />
           </ListItem>
       </List>
       <Divider />

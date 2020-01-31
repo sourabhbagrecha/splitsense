@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './GoogleSignInButton.css';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
+import { UserContext } from '../Contexts/userContext';
 
 function GoogleSignInButton(props) {
-  const { user, signOut, signInWithGoogle, setUserLocal } = props;
+  const { user, signOut, signInWithGoogle} = props;
+  const {userLocal, setUserLocal} = useContext(UserContext);
   const signIn = async (e) => {
     try {
       const response = await signInWithGoogle(e);
@@ -12,19 +14,18 @@ function GoogleSignInButton(props) {
       const {profile, isNewUser} = response.additionalUserInfo;
       setUserLocal({idToken});
       if(isNewUser){
-        console.log(await Axios.post(`${serverUrl}/user/new`, {profile, isNewUser}))
+        await Axios.post(`${serverUrl}/user/new`, {profile, isNewUser})
       }
       const checkAuth = await Axios.get(`${serverUrl}/helper/check-auth`, {headers: { Authorization: JSON.stringify({idToken}) }});
       setUserLocal({idToken, userId: checkAuth.data.userId});
-      console.log("CheckAuth:::>>", checkAuth.data);
       window.localStorage.setItem("email", checkAuth.data.email);
     } catch (error) {
       console.log(error);
     }
   };
   const signOutHandler = async (e) => {
-    setUserLocal("");
     signOut();
+    setUserLocal(null);
   }
   return (
     <div onClick={user ? signOutHandler : signIn} className='g-sign-in-button'>
@@ -34,7 +35,7 @@ function GoogleSignInButton(props) {
         </div>  
         <span className='text-container'> 
           {
-            user
+            userLocal
               ? " Sign Out"
               : "Sign In With Google"
           }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeOutlined, AccountBalanceOutlined, EventSeatOutlined, ReceiptOutlined, CastForEducationOutlined, DevicesOutlined, MovieOutlined, EventOutlined, NotInterestedOutlined, FastfoodOutlined, MoneyOutlined, LocalGroceryStoreOutlined, FitnessCenter, HouseOutlined, LocalAtmOutlined, PetsOutlined, PeopleOutline, SettingsOutlined, DriveEtaOutlined, MenuOutlined } from "@material-ui/icons"
+import { HomeOutlined, AccountBalanceOutlined, EventSeatOutlined, ReceiptOutlined, CastForEducationOutlined, DevicesOutlined, MovieOutlined, EventOutlined, NotInterestedOutlined, FastfoodOutlined, MoneyOutlined, LocalGroceryStoreOutlined, FitnessCenter, HouseOutlined, LocalAtmOutlined, PetsOutlined, PeopleOutline, SettingsOutlined, DriveEtaOutlined } from "@material-ui/icons"
 
 export const Categories = [
   {

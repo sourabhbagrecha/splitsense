@@ -3,7 +3,7 @@ import { useTheme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import GroupItem from './GroupItem';
 

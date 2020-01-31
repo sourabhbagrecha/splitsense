@@ -2,7 +2,7 @@ import React from 'react';
 import './Arrow.css'
 
 function ArrowDownAnimated(props) {
-  const {} = props
+  // const {} = props
 
   return (
     <svg className="arrows">

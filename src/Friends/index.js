@@ -3,14 +3,14 @@ import { useTheme } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import FriendItem from './FriendItem';
 
 function Friends(props) {
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
-  const [friends, setFriends] = useState([0]);
+  const [friends, setFriends] = useState([]);
   useEffect(() => {fetchFriends()}, []);
   const fetchFriends = async () => {
     const response = await Axios.get(`${serverUrl}/friend/fetch-all`, authHeader );

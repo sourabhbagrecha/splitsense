@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from '@material-ui/core';
-import { expenseDataArray } from "../dummyData";
+import { expenseDataArray } from "../utils/dummyData";
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import AddExpenseMain from './AddExpenseMain';
 
@@ -21,7 +21,7 @@ function AddExpense(props) {
   const {friend, group} = props;
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchPart();
+    fetchPart();// eslint-disable-next-line
   }, [])
   const fetchPart = async () => {
     const partResponse = await Axios.get(`${serverUrl}/${friend ? "friend" : "group"}/participants/${friend ? friendId : groupId}`, authHeader);

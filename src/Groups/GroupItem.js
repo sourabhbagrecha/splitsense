@@ -12,19 +12,21 @@ function GroupItem(props) {
     loading ?
     <ListItemLoader/>
     :
-    <Link key={group._id} to={`/group/${group._id}`} style={{textDecoration: 'none', color: 'black'}}>
-      <ListItem divider>
-        <ListItemAvatar>
-          <Avatar style={{color: "white", backgroundColor: theme.palette.secondary.main}} src={group.picture}>
-            <GroupOutlined />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText
-          primary={group.name}
-          secondary="You owe nothing"
-        />
-      </ListItem>
-    </Link>
+    <>
+      <Link to={`/group/${group._id}`} style={{textDecoration: 'none', color: 'black'}}>
+        <ListItem divider>
+          <ListItemAvatar>
+            <Avatar style={{color: "white", backgroundColor: theme.palette.secondary.main}} src={group.picture}>
+              <GroupOutlined />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            primary={group.name}
+            secondary="You owe nothing"
+          />
+        </ListItem>
+      </Link>
+    </>
   )
 }
 

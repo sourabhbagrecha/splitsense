@@ -3,7 +3,7 @@ import { Container, CssBaseline } from '@material-ui/core';
 import ExpenseHeader from './ExpenseHeader';
 import ExpenseBody from './ExpenseBody';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 
 function Expense(props) {

@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
-import { Categories } from '../categoriesData';
-import { currencies } from '../currencyData';
+import { Categories } from '../utils/categoriesData';
+import { currencies } from '../utils/currencyData';
 import ListItemLoader from '../Loaders/ListItemLoader';
 
 function Entry(props) {
-  const {_id, refId, actType, operation} = props;
+  const {refId, actType} = props;
   const theme = useTheme();
   const [meta, setMeta] = useState({});
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchEntry();
+    fetchEntry();// eslint-disable-next-line
   }, []);
   const fetchEntry = async () => {
     const metaResponse = await Axios.get(`${serverUrl}/${actType}/${refId}/meta`, authHeader);

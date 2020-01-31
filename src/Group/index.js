@@ -4,7 +4,7 @@ import Axios from 'axios';
 import GroupBody from './GroupBody';
 import GroupHeader from './GroupHeader';
 import { userId } from '../utils/userIdLocal';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 
 function Group(props) {

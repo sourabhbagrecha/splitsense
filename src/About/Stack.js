@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import useScript from '../utils/useScript';
+import React from 'react';
 
 function Stack(props) {
   return (

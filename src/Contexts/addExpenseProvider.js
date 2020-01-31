@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import useSplitBetweenState from "../Hooks/useSplitBetweenState";
 import useInputState from "../Hooks/useInputState";
-import {splitNames} from '../constants.js';
+import {splitNames} from '../utils/constants.js';
 import useNumberInputState from "../Hooks/useNumberInputState";
 
 export const AddExpenseContext = createContext();

@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 function SplitItemEntry(props) {
   const { amount, enabled, percentage, share, splitMethod, handleShareChange, picture, user} = props;
   let name = getName(user, props.name);
-  const {toggleSplitEnabled, splitEqually, splitUnequally, splitByPercentage, splitByShare, totalAmount, splitBetween, calculateShare, calculatePercentage} = useContext(AddExpenseContext);
+  const {toggleSplitEnabled, splitEqually, splitUnequally, splitByPercentage, splitByShare, totalAmount, calculateShare, calculatePercentage} = useContext(AddExpenseContext);
   const classes = useStyles();
   const handleSplitUnequally = (e) => {
     const personId = e.target.getAttribute('personid');

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Container, CssBaseline, Typography, makeStyles, CircularProgress, Input, TextField, Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Container, CssBaseline, Typography, makeStyles, TextField, Button } from '@material-ui/core';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { getParams } from '../utils/getParams';
 import { authHeader } from '../utils/authHeader';
 import ArrowDownAnimated from '../SvgHelpers/ArrowDown';
 import UserCard from './UserCard';
-import { SaveAlt, Save } from '@material-ui/icons';
+import { Save } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme =>({
   title: {

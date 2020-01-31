@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, CssBaseline } from '@material-ui/core';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import FriendHeader from './FriendHeader';
 import FriendBody from './FriendBody';

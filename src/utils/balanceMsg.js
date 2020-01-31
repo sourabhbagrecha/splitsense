@@ -1,5 +1,5 @@
 import React from 'react';
-import { currencies } from "../currencyData"
+import { currencies } from "./currencyData"
 import { red, green } from '@material-ui/core/colors';
 
 const balanceMsg = (amount, currency="INR", thirdPerson=true, noColor=false) => {

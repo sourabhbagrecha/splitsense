@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, Checkbox, FormControlLabel, Dialog, DialogContent, Divider, DialogTitle, MenuItem, Grid } from '@material-ui/core';
+import { Container, CssBaseline, makeStyles, Avatar, Typography, TextField, Button, MenuItem, Grid } from '@material-ui/core';
 import { PieChart } from '@material-ui/icons';
-import {splitNames, serverUrl} from '../constants.js';
+import {splitNames, serverUrl} from '../utils/constants.js';
 import SplitDialog from './SplitDialog.js';
 import { AddExpenseContext } from '../Contexts/addExpenseProvider';
 import Axios from 'axios';
-import { currencies } from '../currencyData.js';
-import { Categories } from '../categoriesData.js';
+import { currencies } from '../utils/currencyData.js';
+import { Categories } from '../utils/categoriesData.js';
 import { AlertContext } from '../Contexts/AlertContext.js';
 import { authHeader } from '../utils/authHeader.js';
 import PaidByDialog from './PaidByDialog.js';

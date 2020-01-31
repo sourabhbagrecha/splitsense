@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography, CssBaseline, Container, TextField, makeStyles, Button } from '@material-ui/core'
 import useInputState from '../Hooks/useInputState';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import InvitationDialog from './InvitationDialog';
 import { authHeader } from '../utils/authHeader';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Typography, Fab, makeStyles, useTheme } from '@material-ui/core';
-import { Add, GroupOutlined, NavigationOutlined, AccountBalance, AccountBalanceOutlined, AccountBalanceWalletOutlined, AccountBalanceWallet } from '@material-ui/icons';
+import { Add, GroupOutlined, AccountBalance, AccountBalanceWallet } from '@material-ui/icons';
 import HeaderLoader from '../Loaders/HeaderLoader';
 import BalancesDialog from './BalancesDialog';
 import useDialogCloseState from '../Hooks/useDialogCloseState';

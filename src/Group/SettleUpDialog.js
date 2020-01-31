@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemText, ListItemAvatar, Avatar, Dialog, DialogTitle, makeStyles, ListItemSecondaryAction, IconButton, CircularProgress } from '@material-ui/core';
-import { PersonOutline, ArrowRightAlt, ArrowForwardOutlined } from '@material-ui/icons';
-import { balanceMsg, settleUpMsg } from '../utils/balanceMsg';
-import { userId, getName } from '../utils/userIdLocal';
+import { PersonOutline, ArrowForwardOutlined } from '@material-ui/icons';
+import { settleUpMsg } from '../utils/balanceMsg';
+import { userId } from '../utils/userIdLocal';
 import Axios from 'axios';
-import { serverUrl } from '../constants';
+import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
 import { Link } from 'react-router-dom';
-
-const settleUpPrimaryText = (from, to) => {
-  return (
-    <>
-
-      <ArrowRightAlt/>
-    </>
-  )
-}
 
 const Entry = ({user, balance, role, group}) => (
   <Link 
@@ -55,7 +46,7 @@ function SettleUpDialog(props) {
   const [myTransfers, setMyTransfer] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    fetchUsersData();
+    fetchUsersData();// eslint-disable-next-line
   }, []);
   const fetchUsersData = async () => {
     try {

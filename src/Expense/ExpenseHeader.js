@@ -3,7 +3,7 @@ import { Edit } from '@material-ui/icons';
 import { Typography, Fab, makeStyles, Avatar, useTheme } from '@material-ui/core';
 import Moment from 'react-moment';
 import LoadingBar from '../LoadingBar';
-import { Categories } from '../categoriesData';
+import { Categories } from '../utils/categoriesData';
 import HeaderLoader from '../Loaders/HeaderLoader';
 
 // const useStyles = makeStyles(theme => ({

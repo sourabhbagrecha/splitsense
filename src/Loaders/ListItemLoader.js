@@ -3,7 +3,7 @@ import { ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/cor
 import { Skeleton } from '@material-ui/lab';
 
 function ListItemLoader(props) {
-  const {} = props
+  // const {} = props
 
   return (
       <ListItem divider>

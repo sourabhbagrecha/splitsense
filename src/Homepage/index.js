@@ -9,7 +9,6 @@ import Box from '@material-ui/core/Box';
 import { useTheme, CssBaseline } from '@material-ui/core';
 import Friends from '../Friends';
 import SwipeableViews from 'react-swipeable-views';
-import DrawerLeft from '../DrawerLeft';
 import Groups from '../Groups';
 import PanelActions from './PanelActions';
 
@@ -89,7 +88,7 @@ export default function Homepage(props) {
     if(index < 0){
       index = 0
     }
-    setValue(index)
+    setValue(index)// eslint-disable-next-line
   }, [search]);
   const handleChange = (event, newValue) => {
     setValue(newValue);

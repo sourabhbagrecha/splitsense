@@ -1,6 +1,6 @@
 import React from 'react';
 import withFirebaseAuth from 'react-with-firebase-auth';
-import firebase from './firebaseConfig';
+import firebase from './utils/firebaseConfig';
 import './App.css';
 import Homepage from './Homepage';
 import { Switch, Route } from 'react-router-dom';
@@ -16,6 +16,7 @@ import Layout from './Layout';
 import Group from './Group';
 import About from './About';
 import AddPayment from './AddPayment';
+import { UserProvider } from './Contexts/userContext';
 
 
 const firebaseAppAuth = firebase.auth();
@@ -42,34 +43,32 @@ function App(props) {
     signOut,
     signInWithGoogle,
   } = props;
-  const authProps =  { user, signOut, signInWithGoogle };
-  // useEffect(() =>  console.log(user ? user.providerData[0].uid : "No user"), [user]);
+  const authProps =  { user, signOut, signInWithGoogle };  
   return (
     <ThemeProvider theme={theme}>
       <AlertProvider>
-        <div className="App">
-          <Layout authProps={authProps}>
-            {
-              user ?
-              <Switch>
-                <Route exact path="/" render={(routeProps) => <Homepage {...routeProps} />} />
-                <Route exact path="/about" render={(routeProps) => <About {...routeProps} />} />
-                <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
-                <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
-                <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
-                <Route exact path="/friend/new" render={(routeProps) => <AddFriend {...routeProps} />} />
-                <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
-                <Route exact path="/friend/:friendId/add-expense" render={(routeProps) => <AddExpense friend={true} {...routeProps} />} />
-                <Route exact path="/group/new" render={(routeProps) => <CreateGroup {...routeProps} />} />
-                <Route exact path="/group/:id" render={(routeProps) => <Group {...routeProps} />} />
-                <Route exact path="/group/:groupId/add-expense" render={(routeProps) => <AddExpense group={true} {...routeProps} />} />
-                <Route exact path="/payment" render={(routeProps) => <AddPayment {...routeProps}/>} />
-              </Switch>
-              :
-              <></>
-            }
-          </Layout>
-        </div>
+        <UserProvider>
+          <div className="App">
+            <Layout authProps={authProps}>
+              {
+                <Switch>
+                  <Route exact path="/" render={(routeProps) => <Homepage {...routeProps} />} />
+                  <Route exact path="/about" render={(routeProps) => <About {...routeProps} />} />
+                  <Route exact path="/expense/new" render={(routeProps) => <AddExpense {...routeProps} />} />
+                  <Route exact path="/expense/:id" render={(routeProps) => <Expense {...routeProps} />} />
+                  <Route exact path="/expense/:id/edit" render={(routeProps) => <AddExpense {...routeProps} />} />
+                  <Route exact path="/friend/new" render={(routeProps) => <AddFriend {...routeProps} />} />
+                  <Route exact path="/friend/:id" render={(routeProps) => <Friend {...routeProps} />} />
+                  <Route exact path="/friend/:friendId/add-expense" render={(routeProps) => <AddExpense friend={true} {...routeProps} />} />
+                  <Route exact path="/group/new" render={(routeProps) => <CreateGroup {...routeProps} />} />
+                  <Route exact path="/group/:id" render={(routeProps) => <Group {...routeProps} />} />
+                  <Route exact path="/group/:groupId/add-expense" render={(routeProps) => <AddExpense group={true} {...routeProps} />} />
+                  <Route exact path="/payment" render={(routeProps) => <AddPayment {...routeProps}/>} />
+                </Switch>
+              }
+            </Layout>
+          </div>
+        </UserProvider>
       </AlertProvider>
     </ThemeProvider>
   );

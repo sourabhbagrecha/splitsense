@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Dialog, DialogTitle, DialogContent, FormControl, InputLabel, Select, MenuItem, Divider, Button } from '@material-ui/core';
 import SplitItemEntry from './SplitItemEntry';
 import { AddExpenseContext } from '../Contexts/addExpenseProvider';
