@@ -1,32 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ListItem, ListItemAvatar, Avatar, ListItemText, useTheme } from '@material-ui/core';
-import Axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import ListItemLoader from '../Loaders/ListItemLoader';
 import { serverUrl } from '../utils/constants';
 import { authHeader } from '../utils/authHeader';
+import Axios from 'axios';
+import { Link } from 'react-router-dom';
+import { ListItem, ListItemAvatar, Avatar, useTheme, ListItemText } from '@material-ui/core';
 import { Categories } from '../utils/categoriesData';
-import { currencies } from '../utils/currencyData';
-import ListItemLoader from '../Loaders/ListItemLoader';
 import { AccountBalanceWalletOutlined } from '@material-ui/icons';
+import { currencies } from '../utils/currencyData';
+import { findVerb } from '../utils/activityVerbs';
 
-function Entry(props) {
-  const {refId, actType} = props;
-  const theme = useTheme();
-  const [meta, setMeta] = useState({});
+function ActivityItem(props) {
+  const {actType, operation, by, refId} = props
   const [loading, setLoading] = useState(true);
+  const [meta, setMeta] = useState();
+  const [person, setPerson] = useState();
+  const theme = useTheme();
   useEffect(() => {
-    fetchEntry();// eslint-disable-next-line
+    loadActivity();// eslint-disable-next-line
   }, []);
-  const fetchEntry = async () => {
+  const loadActivity = async () => {
     const metaResponse = await Axios.get(`${serverUrl}/${actType}/${refId}/meta`, authHeader);
-    console.log(metaResponse);
     setMeta(metaResponse.data.results);
-    setLoading(false)
+    const personResponse = await Axios.get(`${serverUrl}/user/get-meta/${by}`, authHeader);
+    setPerson(personResponse.data.user);
+    setLoading(false);
   }
   return (
     loading ?
     <ListItemLoader/>
-    : 
+    :
     <Link to={`/${actType}/${meta._id}`} style={{textDecoration: 'none', color: 'black'}}>
       <ListItem divider>
         <ListItemAvatar>
@@ -35,11 +38,12 @@ function Entry(props) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText
-          primary={actType === "expense" ? meta.title : `${meta.from.name.full} paid ${meta.to.name.full}`}
+          primary={actType === "expense" ? `${person.name.full} ${findVerb(operation)} ${meta.title}` : `${meta.from.name.full} paid ${meta.to.name.full}`}
           secondary={actType === "expense" ? `${currencies.find(c => c.code === meta.currency).symbol_native} ${meta.amount}` : meta.amount}
         />
       </ListItem>
-    </Link>    
+    </Link>
   )
-}
-export default Entry;
+};
+
+export default ActivityItem

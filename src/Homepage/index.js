@@ -11,6 +11,7 @@ import Friends from '../Friends';
 import SwipeableViews from 'react-swipeable-views';
 import Groups from '../Groups';
 import PanelActions from './PanelActions';
+import Activities from '../Activities';
 
 const TabsArray = ['friends', 'groups', 'activity'];
 
@@ -128,7 +129,7 @@ export default function Homepage(props) {
               <Groups/>
             </TabPanel>
             <TabPanel className={classes.tabPanelRoot} value={value} index={2}>
-              <Friends/>
+              <Activities />
             </TabPanel>
           </SwipeableViews>
           <div className={classes.panelActionIcon}>

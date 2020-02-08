@@ -1,7 +1,10 @@
 import React from 'react';
 import { Avatar, Typography, Fab, makeStyles, useTheme } from '@material-ui/core';
-import { PersonOutline, Add } from '@material-ui/icons';
+import { PersonOutline, Add, AccountBalanceWallet } from '@material-ui/icons';
 import HeaderLoader from '../Loaders/HeaderLoader';
+import { balanceMsg } from '../utils/balanceMsg';
+import useDialogCloseState from '../Hooks/useDialogCloseState';
+import SettleUpDialog from './SettleUpDialog';
 
 const useStyles = makeStyles(theme => ({
   fabContainer: {
@@ -12,15 +15,14 @@ const useStyles = makeStyles(theme => ({
     zIndex: '2',
     bottom: theme.spacing(-3),
     right: theme.spacing(3),
-  },
+  }
 }));
 
 function FriendHeader(props) {
-  const {friendPerson, friend, history, loading} = props;
+  const {friendPerson, friend, history, loading, balanceSelf} = props;
   const classes = useStyles();
   const theme = useTheme();
-  console.log(friendPerson, friend);
-
+  const [settleUpDialog, handleSettleUpOpen, handleSettleUpClose] = useDialogCloseState(false);
   return (
     loading ? 
     <HeaderLoader/>
@@ -37,11 +39,28 @@ function FriendHeader(props) {
           <Typography variant="caption">
             {friendPerson.email}
           </Typography>
+          <Typography variant="body2">
+            You {balanceMsg(balanceSelf, 'INR', false, true)}
+          </Typography>
         </div>
       </div>
-      <Typography variant="subtitle1">
-        You are owed: $100
-      </Typography>
+      {
+        balanceSelf !== 0 &&
+        <div className={classes.headerActions}>
+          <Fab
+            style={{marginTop: '0.5rem'}}
+            variant="extended"
+            size="small"
+            color="default"
+            aria-label="add"
+            onClick={e => handleSettleUpOpen(e)}
+          >
+            <AccountBalanceWallet />
+            Settle Up
+          </Fab>
+          <SettleUpDialog friend={friend} transfer={friend.transfer} settleUpOpen={settleUpDialog} handleSettleUpClose={handleSettleUpClose} />
+        </div>
+      }
       <Fab className={classes.fab} color="secondary" size="large" aria-label="add" onClick={() => history.push(`/friend/${friend._id}/add-expense`)}>
         <Add />
       </Fab>

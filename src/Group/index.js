@@ -22,9 +22,9 @@ function Group(props) {
       const response = await Axios.get(`${serverUrl}/group/${id}`, authHeader);
       const {group} = response.data;
       console.log("::::::::::::>>>>>>>", group.balances.map(b => b.user._id), userId);
-      const balanceSelf = group.balances.find(b => b.user._id === userId).balance ;
+      const balanceSelfResponse = group.balances.find(b => b.user._id === userId).balance ;
       setGroup(group);
-      setBalanceSelf(balanceSelf);
+      setBalanceSelf(balanceSelfResponse);
       setActivities(response.data.activities);
       setLoading(false);
     } catch (error) {

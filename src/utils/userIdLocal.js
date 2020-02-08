@@ -1,5 +1,5 @@
-const userLocal = JSON.parse(window.localStorage.getItem("user"));
-export const {userId} = userLocal || "";
+const userId = window.localStorage.getItem("userId");
+export {userId};
 
 export const getName = (user, name) => {
   return user.toString() === userId.toString() ? "You" : name;
