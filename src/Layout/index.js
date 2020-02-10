@@ -4,6 +4,7 @@ import { Snackbar } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import DrawerLeft from '../DrawerLeft';
 import { UserContext } from '../Contexts/userContext';
+import Login from '../Login';
 
 function Layout(props) {
   const { 
@@ -15,22 +16,22 @@ function Layout(props) {
   const {userLocal} = useContext(UserContext)
   return (
     <div>
-      <DrawerLeft authProps={ authProps }>
-        <div style={{ marginTop: "1rem"}}>
-          {
-            (userLocal === "" || !userLocal)
-            ?
-            <>Login Screen</>
-            :
-            props.children
-          }
-          <Snackbar open={alertOpen} autoHideDuration={5000} onClose={handleAlertClose}>
-            <Alert onClose={handleAlertClose} severity={alertType}>
-              {alertMsg}
-            </Alert>
-          </Snackbar>
-        </div>
-      </DrawerLeft>
+      {
+        (userLocal === "" || !userLocal)
+        ?
+        <Login authProps={ authProps } />
+        :
+        <DrawerLeft authProps={ authProps }>
+          {props.children}
+          <div style={{ marginTop: "1rem"}}>
+            <Snackbar open={alertOpen} autoHideDuration={5000} onClose={handleAlertClose}>
+              <Alert onClose={handleAlertClose} severity={alertType}>
+                {alertMsg}
+              </Alert>
+            </Snackbar>
+          </div>
+        </DrawerLeft>
+      }
     </div>
   )
 };

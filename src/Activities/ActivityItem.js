@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import ListItemLoader from '../Loaders/ListItemLoader';
-import { serverUrl } from '../utils/constants';
-import { authHeader } from '../utils/authHeader';
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ListItem, ListItemAvatar, Avatar, useTheme, ListItemText } from '@material-ui/core';
-import { Categories } from '../utils/categoriesData';
 import { AccountBalanceWalletOutlined } from '@material-ui/icons';
+import {  Categories  } from '../utils/categoriesData';
+import { authHeader  } from '../utils/authHeader';
 import { currencies } from '../utils/currencyData';
+import { serverUrl } from '../utils/constants';
 import { findVerb } from '../utils/activityVerbs';
 
 function ActivityItem(props) {
-  const {actType, operation, by, refId} = props
+  const {actType, operation, by, refId} = props;
   const [loading, setLoading] = useState(true);
-  const [meta, setMeta] = useState();
   const [person, setPerson] = useState();
+  const [meta, setMeta] = useState();
   const theme = useTheme();
+
   useEffect(() => {
     loadActivity();// eslint-disable-next-line
   }, []);
