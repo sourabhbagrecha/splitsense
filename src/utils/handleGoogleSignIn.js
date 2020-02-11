@@ -5,15 +5,10 @@ export const handleGoogleSignIn = async (e, signInWithGoogle, setUserLocal) => {
   try {
     const response = await signInWithGoogle(e);
     const {idToken} = response.credential;
-    const {profile, isNewUser} = response.additionalUserInfo;
-    setUserLocal({idToken});
-    if(isNewUser){
-      await Axios.post(`${serverUrl}/user/new`, {profile, isNewUser})
-    }
-    const checkAuth = await Axios.get(`${serverUrl}/helper/check-auth`, {headers: { Authorization: JSON.stringify({idToken}) }});
-    setUserLocal({idToken});
-    window.localStorage.setItem("userId", checkAuth.data.userId);
-    window.localStorage.setItem("email", checkAuth.data.email);
+    const {profile} = response.additionalUserInfo;
+    const serverRes = await Axios.post(`${serverUrl}/auth/google/login`, {profile, idToken})
+    window.localStorage.setItem('user', JSON.stringify({token: serverRes.data.token}));
+    window.localStorage.setItem('userId', serverRes.data.userId)
   } catch (error) {
     console.log(error);
   }

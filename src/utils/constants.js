@@ -5,7 +5,7 @@ const splitNames = [
   {value: "percentage", display: "BY PERCENTAGE"}
 ];
 
-// const serverUrl = "http://localhost:5001";
-const serverUrl = "http://splitsense.herokuapp.com";
+const serverUrl = "http://localhost:5001";
+// const serverUrl = "https://splitsense.herokuapp.com";
 
 export {splitNames, serverUrl};

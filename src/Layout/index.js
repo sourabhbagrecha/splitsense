@@ -22,8 +22,8 @@ function Layout(props) {
         <Login authProps={ authProps } />
         :
         <DrawerLeft authProps={ authProps }>
-          {props.children}
           <div style={{ marginTop: "1rem"}}>
+            {props.children}
             <Snackbar open={alertOpen} autoHideDuration={5000} onClose={handleAlertClose}>
               <Alert onClose={handleAlertClose} severity={alertType}>
                 {alertMsg}

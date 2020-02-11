@@ -13,7 +13,7 @@ const useStyles = makeStyles( theme => ({
   },
   title: {
     textAlign: "center",
-    color: red[500],
+    color: red[200],
     fontWeight: 600,
     paddingTop: "2rem"
   },
@@ -43,16 +43,6 @@ function Login(props) {
             fullWidth
             color="secondary"
             className={classes.inputTextFieldMain}
-            InputProps={{
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              }
-            }}
-            InputLabelProps={{
-              className: classes.floatingLabelFocusStyle,
-            }}
           />
         </div>
         <div className={classes.inputTextField}>
@@ -62,16 +52,6 @@ function Login(props) {
             fullWidth
             color="secondary"
             className={classes.inputTextFieldMain}
-            InputProps={{
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline,
-              }
-            }}
-            InputLabelProps={{
-              className: classes.floatingLabelFocusStyle,
-          }}
           />
         </div>
         <div className={classes.inputTextField}>
